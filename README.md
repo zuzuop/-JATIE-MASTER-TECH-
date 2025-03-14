@@ -1,75 +1,56 @@
-# BOTNAME-MD
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PRINCE-MDXI Bot Setup</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; background-color: #0d0d0d; color: #fff; padding: 20px; }
+        h1, h2, h3, h4 { text-align: center; }
+        .repo, .section { margin: 20px auto; padding: 20px; background: #1a1a1a; border-radius: 8px; width: 90%; max-width: 800px; }
+        .btn { display: inline-block; padding: 10px 20px; margin: 10px 0; background: #ff00ab; color: #fff; text-decoration: none; border-radius: 5px; transition: 0.3s; }
+        .btn:hover { background: #cc0099; }
+        img { border-radius: 8px; }
+        .warning { color: #ffcc00; text-align: center; font-size: 14px; }
+        pre { background: #262626; padding: 10px; border-radius: 5px; overflow-x: auto; }
+    </style>
+</head>
+<body>
+    <img src="https://i.imgur.com/dBaSKWF.gif" width="100%" height="90" alt="PRINCE-MDXI">
+    <h1>PRINCE-MDXI WhatsApp Bot 🌝💚</h1>
+    <p align="center">Simple and Best WhatsApp Bot Created by <strong>PRINCE MAYEL</strong></p>
 
-<img src="https://i.imgur.com/dBaSKWF.gif" height="90" width="100%">
-𝐒𝐢𝐦𝐩𝐥𝐞 𝐁𝐞𝐬𝐭 𝐖𝐡𝐚𝐭𝐬𝐚𝐩𝐩 𝐁𝐨𝐭 𝐂𝐫𝐞𝐚𝐭𝐞𝐝 𝐁𝐲 Your Name 🌝💚
-<div class = "repo" align = "center">
- 
-<a href = "#">
-<img src = "your image url"  width="300" height="200">
-</img>
- <p align="center">
-  <a href="#"><img src="http://readme-typing-svg.herokuapp.com?color=ff00ab&center=true&vCenter=true&multiline=false&lines=BOTNAME+MD+WHATSAPP+BOT+MD" alt="">
-   
-## 𝐃𝐄𝐏𝐋𝐎𝐘 𝐒𝐄𝐓𝐔𝐏 ↕️
+    <div class="repo">
+        <h2>🔗 Repository</h2>
+        <a href="https://github.com/mayelprince/PRINCE-MDXI/fork" class="btn">⭐ Fork the Repo</a>
+        <img src="your image url" width="300" height="200" alt="Bot Image">
+    </div>
 
-1. Fork and star this repo first
+    <div class="section">
+        <h2>🔑 Get Session ID</h2>
+        <p>Generate your session ID for deployment:</p>
+        <a href="https://princeweb.onrender.com" class="btn">🚀 Get Pair Code</a>
+    </div>
 
-Click the button below to fork the Bot repository to your GitHub account:
+    <div class="section">
+        <h2>⚙️ Setup Guide</h2>
+        <ol>
+            <li>Fork and star the repository.</li>
+            <li>Generate your session ID and copy it.</li>
+            <li>Edit the <code>config.js</code> file and paste the session ID.</li>
+        </ol>
+    </div>
 
-  <br>
-    <p align="left">
-  <a href="https://github.com/mayelprince/PRINCE-MDXI/fork"><img title="PRINCE MDXI"MD" src="https://img.shields.io/badgeFORK-Botnameh?color=darkblue&style=for-the-badge&logo=stackshare"></a>
+    <div class="section">
+        <h2>🚀 Deployment Options</h2>
+        <a href="https://dashboard.heroku.com/new?template=https%3A%2F%2Fgithub.com%2Fmayelprince%2FPRINCE-MDXI" class="btn">Deploy on Heroku</a>
+        <a href="https://render.com/deploy?repo=https://github.com/mayelprince/PRINCE-MDXI.git" class="btn">Deploy on Render</a>
+    </div>
 
-<a><img src='https://i.imgur.com/LyHic3i.gif'/>
-
-🔑 Get Session ID (WhatsApp Pair Code Login)
-
-> To deploy, generate your session ID from the link below:
-<p align="left">
-  <a href="https://princeweb.onrender.com">
-    <img src="https://img.shields.io/badge/%F0%9F%9A%80%20GET%20PAIR%20CODE%20WEB-ffcc00?style=for-the-badge"/>
-  </a>
-</p>
-<a><img src='https://i.imgur.com/LyHic3i.gif'/>
-
-
-<a><img src='https://i.imgur.com/LyHic3i.gif'/>
-
-2. **Obtain the Session ID**: After accessing the URL, you should see a session ID displayed. Copy this session ID.
-
-### Step 2: Remove the Prefix
-
-- If your session ID looks something like `MALVIN-XD~FkIQFKrL#yxxxxxxxxx`.
-
-### Step 3: Add Session ID to Config.js
-
-1. **Open your project**: Navigate to your bot's project directory where the `config.js` file is located.
-2. **Edit config.js**: Open the `config.js` file in a text edito
-   
-   
-  1..DEPLOY ON HEROKU ⤵️
-  
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?template=https%3A%2F%2Fgithub.com%2Fmayelprince%2FPRINCE MDXI) 
-   
-   
-  2..DEPLOY ON RENDER ⤵️
-
-[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/mayelprince/PRINCE-MDXI.git)
-
-
-   3..DEPLOY ON GITHUB ⤵️
-
-
-details>
-
-<b><strong><summary align="center" style="color: Yello;">Deploy On Workflow</summary></strong></b>
-<p style="text-align: center; font-size: 1.2em;">
- 
-<h8>Copy the workflow codes and then frok the repo edit config add session id then save and now click on repo action tag then click on start new workflow then paste workflow codes rename main.yml to deploy.yml and save the file</h8>
-<h3 align-"center"> Important</h3>
-<h6 align-"center">Attention! We do not take responsibility if your github account is suspended through this Deploy method, I advise you not to use this workflow deploy method in the latest github accounts, github accounts created a year or more ago have not received the risk of suspension so far, this works It will only be done for 6 hours, you need to update the code to reactivate it.</h6>
-
-```
+    <div class="section">
+        <h2>🛠️ GitHub Workflow Deployment</h2>
+        <p>Follow these steps for GitHub Workflow Deployment:</p>
+        <pre>
 name: Node.js CI
 
 on:
@@ -82,7 +63,6 @@ on:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -103,13 +83,14 @@ jobs:
 
     - name: Start application
       run: npm start
-```
-<a><img src='https://i.imgur.com/LyHic3i.gif'/>
+        </pre>
+        <p class="warning">⚠️ Important: Workflow deployment may risk GitHub account suspension for newer accounts. Use at your own discretion.</p>
+    </div>
 
-### Thank You Dear
+    <div class="section">
+        <h2>🙏 Thank You!</h2>
+        <p>Developed by <strong><a href="https://github.com/mayelprince" style="color: #ff00ab;">PRINCE MAYEL</a></strong></p>
+    </div>
 
-> DEVELOPER OF PRINCE-MDXI
-- [Your Name ](https://github.com/mayelprince)
-- Creater and Owner Of PRINCE-MDXI
-
-<a><img src='https://i.imgur.com/LyHic3i.gif'/>
+</body>
+</html>
