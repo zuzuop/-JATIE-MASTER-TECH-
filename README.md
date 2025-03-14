@@ -38,6 +38,11 @@ Generate your session ID for deployment:
   **📺 Talk Drove Deployment Tutorial:**  
   [Watch on YouTube](https://www.youtube.com/@princetech11)
 
+- **Deploy on Panel** (Coming Soon)  
+  
+  **📺 Panel Deployment Tutorial:**  
+  [Watch on YouTube](https://www.youtube.com/@princetech11)
+
 ## 📢 Join Our WhatsApp Channel
 
 Stay updated by joining our official WhatsApp channel:
