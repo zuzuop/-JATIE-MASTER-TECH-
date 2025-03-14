@@ -1,14 +1,12 @@
 # PRINCE-MDXI WhatsApp Bot 🌝💚
 
-![PRINCE-MDXI](https://i.imgur.com/dBaSKWF.gif)
+![Bot Image](https://files.catbox.moe/kzfne8.jpeg)
 
 **Simple and Best WhatsApp Bot Created by [PRINCE MAYEL](https://github.com/mayelprince)**
 
 ## 🔗 Repository
 
 [![Fork the Repo](https://img.shields.io/badge/Fork%20Repo-blue?style=for-the-badge)](https://github.com/mayelprince/PRINCE-MDXI/fork)
-
-![Bot Image](https://files.catbox.moe/kzfne8.jpeg)
 
 ## 🔑 Get Session ID
 
