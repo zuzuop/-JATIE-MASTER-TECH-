@@ -8,7 +8,7 @@
 
 [![Fork the Repo](https://img.shields.io/badge/Fork%20Repo-blue?style=for-the-badge)](https://github.com/mayelprince/PRINCE-MDXI/fork)
 
-![Bot Image](your image url)
+![Bot Image](https://files.catbox.moe/kzfne8.jpeg)
 
 ## 🔑 Get Session ID
 
@@ -24,49 +24,16 @@ Generate your session ID for deployment:
 
 ## 🚀 Deployment Options
 
-- [![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?template=https%3A%2F%2Fgithub.com%2Fmayelprince%2FPRINCE-MDXI)
+- [![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?template=https%3A%2F%2Fgithub.com%2Fmayelprince%2FPRINCE-MDXI)  
+  [Create a Heroku Account](https://signup.heroku.com/) if you don't have one.
+
 - [![Deploy on Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/mayelprince/PRINCE-MDXI.git)
 
-## 🛠️ GitHub Workflow Deployment
+## 📢 Join Our WhatsApp Channel
 
-Follow these steps for GitHub Workflow Deployment:
+Stay updated by joining our official WhatsApp channel:
 
-```yaml
-name: Node.js CI
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
-jobs:
-  build:
-    runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [20.x]
-
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-
-    - name: Set up Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: ${{ matrix.node-version }}
-
-    - name: Install dependencies
-      run: npm install
-
-    - name: Start application
-      run: npm start
-```
-
-⚠️ **Important:** Workflow deployment may risk GitHub account suspension for newer accounts. Use at your own discretion.
+[Join WhatsApp Channel](https://whatsapp.com/channel/0029Vakd0RY35fLr1MUiwO3O)
 
 ## 🙏 Thank You!
 
