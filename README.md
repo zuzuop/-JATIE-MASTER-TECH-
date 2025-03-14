@@ -24,8 +24,19 @@ Generate your session ID for deployment:
 
 - [![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://dashboard.heroku.com/new?template=https%3A%2F%2Fgithub.com%2Fmayelprince%2FPRINCE-MDXI)  
   [Create a Heroku Account](https://signup.heroku.com/) if you don't have one.
+  
+  **📺 Heroku Deployment Tutorial:**  
+  [Watch on YouTube](https://www.youtube.com/@princetech11)
 
 - [![Deploy on Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/mayelprince/PRINCE-MDXI.git)
+  
+  **📺 Render Deployment Tutorial:**  
+  [Watch on YouTube](https://www.youtube.com/@princetech11)
+
+- **Deploy on Talk Drove** (Coming Soon)  
+  
+  **📺 Talk Drove Deployment Tutorial:**  
+  [Watch on YouTube](https://www.youtube.com/@princetech11)
 
 ## 📢 Join Our WhatsApp Channel
 
