@@ -9,7 +9,7 @@ fetchLatestBaileysVersion,
 Browsers
 } = require('@whiskeysockets/baileys')
 
-
+const MENU_IMG = "https://raw.githubusercontent.com/Mayelprince/url/main/url/1264.jpg"
 const l = console.log
 const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, fetchJson } = require('./lib/functions')
 const fs = require('fs')
@@ -85,7 +85,7 @@ let up = `*╭──────────────●●►*
 > *https://whatsapp.com/channel/0029Vakd0RY35fLr1MUiwO3O*
 
 *╰──────────────●●►*`;
-conn.sendMessage(conn.user.id, { image: { url: `https://files.catbox.moe/kzfne8.jpeg` }, caption: up })
+conn.sendMessage(conn.user.id, { image: { url: MENU_IMG }, caption: up })
 
 }
 })
