@@ -6,7 +6,7 @@ let botStartTime = Date.now(); // Enregistrement de l'heure de démarrage du bot
 const ALIVE_IMG = "https://files.catbox.moe/kzfne8.jpeg"; // Assurez-vous que cette URL est valide
 
 cmd({
-    pattern: "uptime",
+    pattern: "alive",
     desc: "Check if the bot is active.",
     category: "main",
     react: "💡",
@@ -41,7 +41,7 @@ Hi 🫵🏽 ${pushname}
 
         // Envoyer le message avec image et légende
         await conn.sendMessage(from, {
-            image: { url: ALIVE_IMG }, // Assurez-vous que l'URL est valide
+            image: { url: './logo.jpg }, // Assurez-vous que l'URL est valide
             caption: formattedInfo,
           
         }, { quoted: mek });
