@@ -95,7 +95,7 @@
     "BOT_NAME": {
       "description": "write hear your name.",
       "required": true,
-      "value": "PRINCE MDXI"
+      "value": "𝗣𝗥𝗜𝗡𝗖𝗘 𝗠𝗗𝗫"
     }, 
 
     "HEART_REACT": {

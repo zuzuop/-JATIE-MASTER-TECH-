@@ -1,6 +1,3 @@
-/*
-_  
-*/
 
 const {
 default: makeWASocket,
