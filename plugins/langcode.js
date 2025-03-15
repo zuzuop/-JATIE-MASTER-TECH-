@@ -10,7 +10,7 @@ cmd({
   pattern: "langcode",  // Trigger for the command
   desc: "Display all ISO 639-1 language codes.",  // Description of the command
   react: "🌍",  // Reaction emoji
-  category: "info",  // Category of the command
+  category: "main",  // Category of the command
   filename: __filename  // Current filename
 }, async (bot, message, chat, { from, reply }) => {
   try {
