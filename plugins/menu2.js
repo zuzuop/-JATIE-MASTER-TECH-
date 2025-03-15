@@ -1,11 +1,3 @@
-/*created by King Malvin 🕵
-contact dev1 263780934873 ♻️
-contact dev2 https://t.me/malvinking2 ♻️
-© just give credit will you ⚠
-*/
-
-
-
 
 
 const config = require('../config')
@@ -65,6 +57,10 @@ ${menu.convert}
 ╔═══✦『 𝐒𝐄𝐀𝐑𝐂𝐇 』✦═╗
 ${menu.search}
 ╚═════════════════╝ 
+
+╔══✦『 𝐒𝐄𝐓𝐓𝐈𝐍𝐆𝐒 』✦═╗
+${menu.settings}
+╚═════════════════╝
 > ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ 
 `
 
