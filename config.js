@@ -5,14 +5,14 @@ function convertToBool(text, fault = 'true') {
 return text === fault ? true : false;
 }
 module.exports = {
-SESSION_ID: process.env.SESSION_ID || "prince_md-iUFhjSrY#DHLSXv02WHHegfPsUX9cXKxxdRP7LY-DtMNxdNQ",
+SESSION_ID: process.env.SESSION_ID || "prince_md-iUFhjSrY#02WHHegfPsUX9cXKxxdRP7LY-DtMNxdNQ",
 AUTO_READ_STATUS: process.env.AUTO_READ_STATUS || "true",
 MODE: process.env.MODE || "private",
 AUTO_VOICE: process.env.AUTO_VOICE || "false",
 AUTO_STICKER: process.env.AUTO_STICKER || "false",
 AUTO_REPLY: process.env.AUTO_REPLY || "false",
-ALIVE_IMG: process.env.ALIVE_IMG || "https://img12.pixhost.to/images/856/575170607_skyzopedia.jpgl",
-MENU_IMG: process.env.MENU_IMG || "https://files.catbox.moe/kzfne8.jpeg",
+ALIVE_IMG: process.env.ALIVE_IMG || "https://raw.githubusercontent.com/Mayelprince/url/main/url/1264.jpg",
+MENU_IMG: process.env.MENU_IMG || "https://raw.githubusercontent.com/Mayelprince/url/main/url/1264.jpg",
 ALIVE_MSG: process.env.ALIVE_MSG || "Hi 💁🏽 How Can I Assist You. Am alive Now.",
 ANTI_LINK: process.env.ANTI_LINK || "true",
 ANTI_BAD: process.env.ANTI_BAD || "true",
