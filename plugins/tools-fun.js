@@ -198,7 +198,7 @@ async (conn, mek, m, { from, reply }) => {
         console.log('JSON response:', json);
 
         // Format the pickup line message
-        const pickupLine = `*Here's a pickup line for you:*\n\n"${json.pickupline}"\n\n> *Powered by your name 🎐*`;
+        const pickupLine = `*Here's a pickup line for you:*\n\n"${json.pickupline}"\n\n> POWERED BY PRINCE TECH`;
 
         // Send the pickup line to the chat
         await conn.sendMessage(from, { text: pickupLine }, { quoted: m });
@@ -348,23 +348,3 @@ cmd({
   }
 });
 
-cmd({
-  pattern: "readmore",
-  alias: ["rm", "rmore", "readm"],
-  desc: "Generate a Read More message.",
-  category: "convert",
-  use: ".readmore <text>",
-  react: "📝",
-  filename: __filename
-}, async (conn, m, store, { args, reply }) => {
-  try {
-    const inputText = args.join(" ") || "No text provided.";
-    const readMore = String.fromCharCode(8206).repeat(4000); // Creates a large hidden gap
-    const message = `${inputText} ${readMore} Continue Reading...`;
-
-    await conn.sendMessage(m.from, { text: message }, { quoted: m });
-  } catch (error) {
-    console.error("❌ Error in readmore command:", error);
-    reply("❌ An error occurred: " + error.message);
-  }
-});

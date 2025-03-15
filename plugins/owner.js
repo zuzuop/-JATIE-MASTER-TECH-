@@ -3,7 +3,71 @@ const config = require('../config')
 const {cmd , commands} = require('../command')
 const os = require("os")
 const { exec } = require('child_process')
-const {runtime} = require('../lib/functions')
+const { runtime, sleep } = require('../lib/functions');
+const path = require("path");
+
+
+
+
+
+cmd({
+    pattern: "delete",
+    react: "🗑️",
+    alias: ["del", "dlt"],
+    desc: "Delete the bot's messages or other messages (requires admin for others).",
+    category: "group",
+    use: '.del',
+    filename: __filename
+  },
+  async (conn, mek, m, { 
+    from, 
+    quoted, 
+    isAdmins, 
+    isBotAdmins, 
+    isOwner, 
+    sender 
+  }) => {
+    try {
+      // Vérifier si un message est cité
+      if (!quoted) {
+        return await conn.sendMessage(from, { text: "❌ Please reply to a message to delete it." }, { quoted: m });
+      }
+  
+      // Construire la clé pour supprimer le message
+      const key = {
+        remoteJid: from, // ID du groupe ou du chat
+        fromMe: quoted.fromMe, // Vérifie si le message appartient au bot
+        id: quoted.id, // ID du message cité
+        participant: quoted.sender // Expéditeur du message cité
+      };
+  
+      // Vérifier si l'utilisateur est administrateur ou propriétaire
+      if (!isAdmins && !isOwner) {
+        return await conn.sendMessage(from, { text: "❌ Only admins or the owner can delete messages." }, { quoted: m });
+      }
+  
+      // Supprimer le message si le bot ou l'owner l'a envoyé
+      if (quoted.fromMe || sender === isOwner) {
+        return await conn.sendMessage(from, { delete: key });
+      }
+  
+      // Vérifier si le bot est administrateur pour supprimer les messages des autres dans un groupe
+      if (m.isGroup) {
+        if (!isBotAdmins) {
+          return await conn.sendMessage(from, { text: "❌ I need admin privileges to delete messages from others." }, { quoted: m });
+        }
+        // Supprimer le message
+        return await conn.sendMessage(from, { delete: key });
+      }
+  
+      // Si en privé et le message n'appartient pas au bot
+      return await conn.sendMessage(from, { text: "❌ I can only delete my messages in private chats." }, { quoted: m });
+    } catch (e) {
+      console.error("Error in delete command:", e);
+    }
+  });
+  
+
 
 
 cmd({
@@ -185,28 +249,7 @@ async (conn, mek, m, { from, isOwner, args, reply }) => {
     reply("📢 Message broadcasted to all groups.");
 });
 
-// 3. Set Profile Picture
-cmd({
-    pattern: "setpp",
-    desc: "Set bot profile picture.",
-    category: "owner",
-    react: "🖼️",
-    filename: __filename
-},
-async (conn, mek, m, { from, isOwner, quoted, reply }) => {
-    if (!isOwner) return reply("❌ You are not the owner!");
-    if (!quoted || !quoted.message.imageMessage) return reply("❌ Please reply to an image.");
 
-    try {
-        const media = await conn.downloadMediaMessage(quoted);
-        await conn.updateProfilePicture(conn.user.jid, { url: media });
-        reply("🖼️ Profile picture updated successfully!");
-    } catch (error) {
-        reply(`❌ Error updating profile picture: ${error.message}`);
-    }
-});
-
-// 4. Block User
 cmd({
     pattern: "block",
     desc: "Block a user.",
@@ -221,7 +264,7 @@ async (conn, mek, m, { from, isOwner, quoted, reply }) => {
     const user = quoted.sender;
     try {
         await conn.updateBlockStatus(user, 'block');
-        reply(`🚫 User ${user} blocked successfully.`);
+        reply(`🚫 User blocked successfully.`);
     } catch (error) {
         reply(`❌ Error blocking user: ${error.message}`);
     }
@@ -242,69 +285,12 @@ async (conn, mek, m, { from, isOwner, quoted, reply }) => {
     const user = quoted.sender;
     try {
         await conn.updateBlockStatus(user, 'unblock');
-        reply(`✅ User ${user} unblocked successfully.`);
+        reply(`✅ User unblocked successfully.`);
     } catch (error) {
         reply(`❌ Error unblocking user: ${error.message}`);
     }
 });
 
-
-cmd({
-    pattern: "vv",
-    desc: "Save quoted media (image/video).",
-    react: "💾",
-    category: "main",
-    filename: __filename
-}, 
-
-async (conn, mek, m, { from, quoted, reply }) => {
-    try {
-        if (!quoted) return reply("❌ Please reply to an image or video.");
-
-        if (quoted.message.imageMessage) {
-            const imageCaption = quoted.message.imageMessage.caption || '';
-            const media = await conn.downloadAndSaveMediaMessage(quoted);
-            await conn.sendMessage(from, { image: { url: media }, caption: imageCaption }, { quoted: mek });
-        } 
-        else if (quoted.message.videoMessage) {
-            const videoCaption = quoted.message.videoMessage.caption || '';
-            const media = await conn.downloadAndSaveMediaMessage(quoted);
-            await conn.sendMessage(from, { video: { url: media }, caption: videoCaption }, { quoted: mek });
-        } 
-        else {
-            return reply("❌ No supported media found in the quoted message.");
-        }
-    } catch (error) {
-        console.error(error);
-        reply(`❌ Error: ${error.message}`);
-    }
-});
-
-         
-      
-
-
-
-// 6. Clear All Chats
-cmd({
-    pattern: "clearchats",
-    desc: "Clear all chats from the bot.",
-    category: "owner",
-    react: "🧹",
-    filename: __filename
-},
-async (conn, mek, m, { from, isOwner, reply }) => {
-    if (!isOwner) return reply("❌ You are not the owner!");
-    try {
-        const chats = conn.chats.all();
-        for (const chat of chats) {
-            await conn.modifyChat(chat.jid, 'delete');
-        }
-        reply("🧹 All chats cleared successfully!");
-    } catch (error) {
-        reply(`❌ Error clearing chats: ${error.message}`);
-    }
-});
 
 cmd({
     pattern: "ping",

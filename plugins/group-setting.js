@@ -144,33 +144,6 @@ reply(`❌ *Error Accurated !!*\n\n${e}`)
 } )
 
 cmd({
-    pattern: "hidetag",
-    react: "🔊",
-    desc: "To Tag all Members for Message",
-    category: "group",
-    use: '.tag Hi',
-    filename: __filename
-},
-async(conn, mek, m,{from, l, quoted, body, isCmd, command, mentionByTag , args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isCreator ,isDev, isAdmins, reply}) => {
-try{
-const msr = (await fetchJson('https://raw.githubusercontent.com/kingmalvn/KING-DATA/refs/heads/main/MSG/mreply.json')).replyMsg
-
-if (!isGroup) return reply(msr.only_gp)
-if (!isAdmins) { if (!isDev) return reply(msr.you_adm),{quoted:mek }} 
-if (!isBotAdmins) return reply(msr.give_adm)
-	
-		if(!q) return reply('*Please add a Message* ℹ️')
-		let teks = `${q}`
-                conn.sendMessage(from, { text: teks, mentions: participants.map(a => a.id) }, { quoted: mek })
-                
-} catch (e) {
-await conn.sendMessage(from, { react: { text: '❌', key: mek.key } })
-console.log(e)
-reply(`❌ *Error Accurated !!*\n\n${e}`)
-}
-} )
-
-cmd({
     pattern: "taggp",
     react: "🔊",
     alias: ["tggp","djtaggp"],
@@ -196,48 +169,73 @@ reply(`❌ *Error Accurated !!*\n\n${e}`)
 
 cmd({
     pattern: "ginfo",
-    react: "🥏",
-    alias: ["groupinfo"],
-    desc: "Get group informations.",
+    desc: "Get group information.",
     category: "group",
-    use: '.ginfo',
-    filename: __filename
-},
-async(conn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isCreator ,isDev, isAdmins, reply}) => {
-try{
-const msr = (await fetchJson('https://raw.githubusercontent.com/kingmalvn/KING-DATA/refs/heads/main/MSG/mreply.json')).replyMsg
+    filename: __filename,
+}, async (conn, mek, m, {
+    from,
+    isGroup,
+    isAdmins,
+    isOwner,
+    isBotAdmins,
+    reply
+}) => {
+    try {
+        // Ensure the command is used in a group
+        if (!isGroup) return reply("*`[❌]`This command can only be used in groups.*");
 
-if (!isGroup) return reply(msr.only_gp)
-if (!isAdmins) { if (!isDev) return reply(msr.you_adm),{quoted:mek }} 
-if (!isBotAdmins) return reply(msr.give_adm)
-const ppUrls = [
-        'https://i.ibb.co/KhYC4FY/1221bc0bdd2354b42b293317ff2adbcf-icon.png',
-        'https://i.ibb.co/KhYC4FY/1221bc0bdd2354b42b293317ff2adbcf-icon.png',
-        'https://i.ibb.co/KhYC4FY/1221bc0bdd2354b42b293317ff2adbcf-icon.png',
-      ];
-let ppUrl = await conn.profilePictureUrl( from , 'image')
-if (!ppUrl) { ppUrl = ppUrls[Math.floor(Math.random() * ppUrls.length)];}
-const metadata = await conn.groupMetadata(from)
-const groupAdmins = participants.filter(p => p.admin);
-const listAdmin = groupAdmins.map((v, i) => `${i + 1}. @${v.id.split('@')[0]}`).join('\n');
-const owner = metadata.owner
+        // Only admins or the owner can use this command
+        if (!isAdmins && !isOwner) return reply("*`[❌]`Only admins and the owner can use this command.*");
 
-const gdata = `*「 Group Information 」*\n
-\t*${metadata.subject}*
+        // Ensure the bot has admin privileges
+        if (!isBotAdmins) return reply("*`[❌]`I need admin privileges to execute this command.*");
 
-*Group Jid* - ${metadata.id}
-*Participant Count* - ${metadata.size}
-*Group Creator* - ${owner.split('@')[0]}
-*Group Description* - ${metadata.desc?.toString() || 'undefined'}\n
-*Group Admins* - \n${listAdmin}\n`
+        // Get group metadata
+        const groupMetadata = await conn.groupMetadata(from);
+        const groupName = groupMetadata.subject;
+        const memberCount = groupMetadata.participants.length;
 
-await conn.sendMessage(from,{image:{url: ppUrl },caption: gdata + config.FOOTER },{quoted:mek })
-} catch (e) {
-await conn.sendMessage(from, { react: { text: '❌', key: mek.key } })
-console.log(e)
-reply(`❌ *Error Accurated !!*\n\n${e}`)
-}
-} )
+        // Get group creator
+        let creator = groupMetadata.owner ? `@${groupMetadata.owner.split('@')[0]}` : 'Unknown';
+
+        // Get list of admins
+        const groupAdmins = groupMetadata.participants
+            .filter(member => member.admin)
+            .map((admin, index) => `${index + 1}. @${admin.id.split('@')[0]}`)
+            .join("\n") || "No admins found";
+
+        // Get creation date (convert from timestamp)
+        const creationDate = groupMetadata.creation 
+            ? new Date(groupMetadata.creation * 1000).toLocaleString('en-US', {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+            }) 
+            : 'Unknown';
+
+        // Format the output message
+        const message = `
+╭───「 *GROUP INFORMATION* 」───◆  
+│ 🏷️ *Group Name:* ${groupName}  
+│ 🆔 *Group ID:* ${from}  
+│ 👥 *Total Members:* ${memberCount}  
+│ 👑 *Creator:* ${creator}  
+│ 📅 *Created On:* ${creationDate}  
+│ 🚻 *Admins:*  
+│ ${groupAdmins}  
+╰──────────────────────────◆`;
+
+        // Send the group information with mentions
+        await conn.sendMessage(from, {
+            text: message,
+            mentions: groupMetadata.participants
+                .filter(member => member.admin)
+                .map(admin => admin.id)
+        }, { quoted: mek });
+
+    } catch (error) {
+        console.error("Error in ginfo command:", error);
+        reply("❌ An error occurred while retrieving the group information.");
+    }
+});
 
 cmd({
     pattern: "tagall",
@@ -527,3 +525,37 @@ cmd({
     }
 });
 			       
+
+cmd({
+    pattern: "demoteall",
+    desc: "Demote all group admins except the bot and the command user (Owner Only)",
+    category: "group",
+    isOwner: true, // Only the owner can use this command
+    use: ".demoteall"
+  }, async (conn, mek, m, { from, reply }) => {
+    try {
+      // Ensure the command is used in a group
+      if (!m.isGroup) return reply("❌ This command can only be used in groups.");
+  
+      // Get the group metadata
+      const groupData = await conn.groupMetadata(from);
+  
+      // Filter all admins and exclude both the bot and the command sender
+      const admins = groupData.participants
+        .filter(p => p.admin !== null) // Select only admins
+        .map(p => p.id)
+        .filter(id => id !== conn.user.jid && id !== m.sender); // Exclude the bot and the command user
+  
+      if (admins.length === 0) {
+        return reply("✅ No admins to demote.");
+      }
+  
+      // Demote all filtered admins
+      await conn.groupParticipantsUpdate(from, admins, "demote");
+  
+      return reply("✅ All group admins have been demoted except the bot and you.");
+    } catch (error) {
+      console.error("Error in demoteall command:", error);
+      return reply(`❌ An error occurred: ${error.message}`);
+    }
+  });

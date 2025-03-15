@@ -25,6 +25,7 @@ download: '',
 group: '',
 owner: '',
 convert: '',
+settings: '',
 search: ''
 };
 

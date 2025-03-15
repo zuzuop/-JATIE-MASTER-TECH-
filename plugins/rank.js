@@ -1,15 +1,4 @@
-/**
 
-
- Copyright (C) 2025.
- Licensed under the  GPL-3.0 License;
- You may not sell this script.
- It is supplied in the hope that it may be useful.
- * @project_name : Free Bot script
- * @author : Malvin King <https://github.com/kingmalvn>
- * @description : A Multi-functional whatsapp bot script.
- * @version 3.0.0
- **/
 
 const { cmd } = require('../command');
 
@@ -72,7 +61,7 @@ cmd({
             target.split("@")[0]
         }\n🔝 *Level*: ${level}\n🔄 *Progression*: ${progressPercent}%\n${progressBar}\n📩 *Messages Sent*: ${
             userData.messages
-        }\n✨ *XP*: ${userData.experience}\n\n> 🤖 POWERED BY MALVIN 🤖`;
+        }\n✨ *XP*: ${userData.experience}\n\n> POWERED BY PRINCE TECH`;
 
         // Send the image and caption together
         await conn.sendMessage(

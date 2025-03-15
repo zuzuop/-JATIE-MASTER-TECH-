@@ -10,7 +10,7 @@ const config = require('../config'); // Ensure your API key is in config
 cmd({
     pattern: "movieinfo",
     desc: "Fetch detailed information about a movie.",
-    category: "utility",
+    category: "search",
     react: "🎞️",
     filename: __filename
 }, async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
@@ -29,7 +29,7 @@ cmd({
         }
 
         const movieInfo = `
-*🎬 Botname MOVIE SERCH🎬*
+*🎬MOVIE SERCH🎬*
 
 *ᴛɪᴛʟᴇ:* ${data.Title}
 *ʏᴇᴀʀ:* ${data.Year}
