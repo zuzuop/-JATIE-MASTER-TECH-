@@ -49,13 +49,6 @@ cmd({
         // Send video file
         await conn.sendMessage(from, { video: { url: data.result.download_url }, mimetype: "video/mp4" }, { quoted: mek });
         
-        // Send document file (optional)
-        await conn.sendMessage(from, { 
-            document: { url: data.result.download_url }, 
-            mimetype: "video/mp4", 
-            fileName: `${data.result.title}.mp4`, 
-            caption: `*${yts.title}*\n> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ*`
-        }, { quoted: mek });
 
     } catch (e) {
         console.log(e);
@@ -151,7 +144,7 @@ const yt = await ytsearch(q);
         return reply("Failed to fetch the audio. Please try again later.");
     }
     
-    let ytmsg = `╔═══〔 *PRINCE MDXI* 〕═══❒
+    let ytmsg = `╔══〔 *PRINCE MDXI* 〕══❒
 ║╭───────────────◆  
 ║│ *❍ ᴏᴡɴʟᴏᴀᴅᴇʀ*
 ║╰───────────────◆
