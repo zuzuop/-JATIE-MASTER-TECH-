@@ -1,3 +1,4 @@
+const {getContextInfo} = require('./new')
 const config = require('../config');
 const { cmd } = require('../command');
 const { ytsearch, ytmp3, ytmp4 } = require('@dark-yasiya/yt-dl.js'); 
@@ -44,7 +45,9 @@ cmd({
 > *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ*`;
 
         // Send video details
-        await conn.sendMessage(from, { image: { url: data.result.thumbnail || '' }, caption: ytmsg }, { quoted: mek });
+        await conn.sendMessage(from, { image: { url: data.result.thumbnail || '' }, caption: ytmsg,
+        contextInfo: getContextInfo(m.sender)                        
+        }, { quoted: mek });
         
         // Send video file
         await conn.sendMessage(from, { video: { url: data.result.download_url }, mimetype: "video/mp4" }, { quoted: mek });
@@ -98,7 +101,7 @@ cmd({
 > *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ*`;
 
         // Send video details
-        await conn.sendMessage(from, { image: { url: data.result.thumbnail || '' }, caption: ytmsg }, { quoted: mek });
+        await conn.sendMessage(from, { image: { url: data.result.thumbnail || '' }, caption: ytmsg, contextInfo: getContextInfo(m.sender) }, { quoted: mek });
         
         
         // Send document file 
@@ -161,7 +164,7 @@ const yt = await ytsearch(q);
 
 
 // Send song details
-    await conn.sendMessage(from, { image: { url: data.result.image || '' }, caption: ytmsg }, { quoted: mek });
+    await conn.sendMessage(from, { image: { url: data.result.image || '' }, caption: ytmsg, contextInfo: getContextInfo(m.sender)}, { quoted: mek });
     
     // Send audio file
     await conn.sendMessage(from, { audio: { url: data.result.downloadUrl }, mimetype: "audio/mpeg" }, { quoted: mek });
