@@ -1,3 +1,4 @@
+const {getContextInfo} = require('./new')
 const axios = require('axios');
 const config = require('../config')
 const {cmd , commands} = require('../command')
@@ -82,13 +83,13 @@ cmd({
 },
 async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
-let status = `┌─────────────────────
+let status = `┌───────────────────
 ├ *Runtime:-* ${runtime(process.uptime())}
 ├ *Ram usage:-* ${(process.memoryUsage().heapUsed / 1024 / 1024).toFixed(2)}GB / ${Math.round(require('os').totalmem / 1024 / 1024)}GB
 ├  *Platform:-* Linux
 ├ *Owners:-* ᴜꜱᴇʀꜱ
 ├ *Version:-* xɪ
-└─────────────────────
+└───────────────────
 
 > *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴘʀɪɴᴄᴇ ᴍᴅxɪ*
 `;
@@ -109,7 +110,7 @@ cmd({
 },
 async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
 try{
-return await conn.sendMessage(from,{image: {url: config.ALIVE_IMG},caption: config.ALIVE_MSG},{quoted: mek})
+return await conn.sendMessage(from,{image: {url: config.ALIVE_IMG},caption: config.ALIVE_MSG, contextInfo: getContextInfo(m.sender)},{quoted: mek})
 }catch(e){
 console.log(e)
 reply(`${e}`)
@@ -247,7 +248,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
         const message = await conn.sendMessage(from, { text: '𝗣𝗶𝗻𝗴𝗶𝗻𝗴...' })
         const endTime = Date.now()
         const ping = endTime - startTime
-        await conn.sendMessage(from, { text: `📍Ping :${ping}ms` }, { quoted: message })
+        await conn.sendMessage(from, { text: `📍Ping :${ping}ms`, contextInfo: getContextInfo(m.sender) }, { quoted: message })
     } catch (e) {
         console.log(e)
         reply(`${e}`)
