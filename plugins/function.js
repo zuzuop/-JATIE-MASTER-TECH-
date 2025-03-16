@@ -68,7 +68,7 @@ cmd({
             await conn.sendMessage(from, { text: `⚠️ Links are not allowed in this group.\n@${sender.split('@')[0]} has been removed. 🚫`, mentions: [sender] }, { quoted: mek });
 
             // Remove the user from the group
-            await conn.groupParticipantsUpdate(from, [sender], 'remove');
+            
         }
     } catch (error) {
         console.error(error);
