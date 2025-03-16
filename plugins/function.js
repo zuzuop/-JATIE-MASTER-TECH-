@@ -1,15 +1,4 @@
-/*
-_  ______   _____ _____ _____ _   _
-| |/ / ___| |_   _| ____/___ | | | |
-| ' / |  _    | | |  _|| |   | |_| |
-| . \ |_| |   | | | |__| |___|  _  |
-|_|\_\____|   |_| |_____\____|_| |_|
 
-ANYWAY, YOU MUST GIVE CREDIT TO MY CODE WHEN COPY IT
-CONTACT ME HERE +237656520674
-YT: KermHackTools
-Github: Kgtech-cmr
-*/
 
 const { cmd } = require('../command')
 const fs = require('fs');
@@ -40,28 +29,7 @@ async (conn,mek, m, { from, body, isGroup, isAdmins, isBotAdmins, reply, sender 
 })
 
 
-const linkPatterns = [
-    /https?:\/\/(?:chat\.whatsapp\.com|wa\.me)\/\S+/gi,   // WhatsApp group or chat links
-    /wa\.me\/\S+/gi,                                      // wa.me links without https
-    /https?:\/\/(?:t\.me|telegram\.me)\/\S+/gi,           // Telegram links
-    /https?:\/\/(?:www\.)?youtube\.com\/\S+/gi,           // YouTube links
-    /https?:\/\/youtu\.be\/\S+/gi,                        // YouTube short links
-    /https?:\/\/(?:www\.)?facebook\.com\/\S+/gi,          // Facebook links
-    /https?:\/\/fb\.me\/\S+/gi,                           // Facebook short links
-    /https?:\/\/(?:www\.)?instagram\.com\/\S+/gi,         // Instagram links
-    /https?:\/\/(?:www\.)?twitter\.com\/\S+/gi,           // Twitter links
-    /https?:\/\/(?:www\.)?tiktok\.com\/\S+/gi,            // TikTok links
-    /https?:\/\/(?:www\.)?linkedin\.com\/\S+/gi,          // LinkedIn links
-    /https?:\/\/(?:www\.)?snapchat\.com\/\S+/gi,          // Snapchat links
-    /https?:\/\/(?:www\.)?pinterest\.com\/\S+/gi,         // Pinterest links
-    /https?:\/\/(?:www\.)?reddit\.com\/\S+/gi,            // Reddit links
-    /https?:\/\/ngl\/\S+/gi,                              // NGL links
-    /https?:\/\/(?:www\.)?discord\.com\/\S+/gi,           // Discord links
-    /https?:\/\/(?:www\.)?twitch\.tv\/\S+/gi,             // Twitch links
-    /https?:\/\/(?:www\.)?vimeo\.com\/\S+/gi,             // Vimeo links
-    /https?:\/\/(?:www\.)?dailymotion\.com\/\S+/gi,       // Dailymotion links
-    /https?:\/\/(?:www\.)?medium\.com\/\S+/gi             // Medium links
-];
+const linkPattern = /https?:\/\/\S+/gi; // Match any URL starting with http:// or https://
 
 cmd({
     on: "body"
