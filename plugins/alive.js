@@ -3,7 +3,7 @@ const { cmd } = require("../command");
 const moment = require("moment");
 
 let botStartTime = Date.now(); // Enregistrement de l'heure de démarrage du bot
-const ALIVE_IMG = "https://files.catbox.moe/kzfne8.jpeg"; // Assurez-vous que cette URL est valide
+const ALIVE_IMG = "https://raw.githubusercontent.com/Mayelprince/url/main/url/1264.jpg"; // Assurez-vous que cette URL est valide
 
 cmd({
     pattern: "alive",
@@ -41,7 +41,7 @@ Hi 🫵🏽 ${pushname}
 
         // Envoyer le message avec image et légende
         await conn.sendMessage(from, {
-            image: { url: './logo.jpg }, // Assurez-vous que l'URL est valide
+            image: { url: ALIVE_IMG }, // Assurez-vous que l'URL est valide
             caption: formattedInfo,
           
         }, { quoted: mek });
