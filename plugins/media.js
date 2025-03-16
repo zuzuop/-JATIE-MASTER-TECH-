@@ -29,7 +29,7 @@ cmd({
     pattern: "dailyfact",
     desc: "Get a random fact of the day and control the daily fact feature.",
     react: "📚",
-    category: "fun",
+    category: "main",
     use: ".dailyfact on/off",
     filename: __filename
 }, async (conn, mek, m, { reply, args }) => {
@@ -109,7 +109,7 @@ cmd({
     pattern: "age",
     desc: "Calculate your age based on your date of birth.",
     react: "🎉",
-    category: "utility",
+    category: "main",
     use: ".age <DD/MM/YYYY>",
     filename: __filename
 }, async (conn, mek, m, { reply, args }) => {
@@ -141,7 +141,7 @@ cmd({
     pattern: "timezone",
     desc: "Get the current time in a specific timezone.",
     react: "🕰️",
-    category: "utility",
+    category: "main",
     use: ".timezone <timezone>",
     filename: __filename
 }, async (conn, mek, m, { args, reply }) => {
@@ -175,7 +175,7 @@ cmd({
     react: "🤖",
     alias: ["pic", "photos"],
     desc: "Convert a sticker to an image.",
-    category: "tools",
+    category: "convert",
     filename: __filename,
 }, async (conn, mek, m, { reply }) => {
     try {
