@@ -16,7 +16,7 @@
     "ALIVE_IMG": {
       "description": "paste your image url if you don't have you can use this public url.",
       "required": true,
-      "value": "https://files.catbox.moe/kzfne8.jpeg"
+      "value": "https://raw.githubusercontent.com/Mayelprince/url/main/url/1264.jpg"
     }, 
     
     "ALIVE_MSG": {
