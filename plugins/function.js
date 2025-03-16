@@ -29,7 +29,7 @@ async (conn,mek, m, { from, body, isGroup, isAdmins, isBotAdmins, reply, sender 
 })
 
 
-const linkPattern = /https?:\/\/\S+/gi; // Match any URL starting with http:// or https://
+const linkPatterns = /https?:\/\/\S+/gi; // Match any URL starting with http:// or https://
 
 cmd({
     on: "body"
