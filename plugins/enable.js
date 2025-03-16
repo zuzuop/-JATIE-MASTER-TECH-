@@ -361,6 +361,7 @@ async (conn, mek, m, { from, args, isOwner, reply }) => {
 //--------------------------------------------
 //  ANTILINK1 COMMANDS
 //--------------------------------------------
+/*
 cmd({
     pattern: "antilink1",
     desc: "Enable Antilink (warn/delete/kick) or turn off",
@@ -459,7 +460,7 @@ cmd({
             break;
     }
 });
-
+*/
 //--------------------------------------------
 //  ANTILINK COMMANDS
 //--------------------------------------------
