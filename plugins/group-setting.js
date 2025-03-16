@@ -9,6 +9,7 @@ const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, 
 
 cmd({
     pattern: 'savecontact',
+    alias: ["vcf","scontact"],
     desc: 'gc vcard',
     category: 'group',
     filename: __filename
@@ -38,7 +39,7 @@ cmd({
         await conn.sendMessage(from, {
             document: fs.readFileSync(nmfilect), 
             mimetype: 'text/vcard', 
-            fileName: 'Xchriss.vcf', 
+            fileName: 'prince_tech.vcf', 
             caption: `\nDone saving.\nGroup Name: *${cmiggc.subject}*\nContacts: *${cmiggc.participants.length}*`
         }, { quoted: mek });
 
@@ -104,34 +105,6 @@ cmd({
   l(e)
   }
   })
-
-
-
-cmd({
-    pattern: "invite",
-    react: "🖇️",
-    alias: ["grouplink","glink"],
-    desc: "To Get the Group Invite link",
-    category: "group",
-    use: '.invite',
-    filename: __filename
-},
-async(conn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isCreator ,isDev, isAdmins, reply}) => {
-try{
-const msr = (await fetchJson('https://raw.githubusercontent.com/kingmalvn/KING-DATA/refs/heads/main/MSG/mreply.json')).replyMsg
-
-if (!isGroup) return reply(msr.only_gp)
-if (!isAdmins) { if (!isDev) return reply(msr.you_adm),{quoted:mek }} 
-if (!isBotAdmins) return reply(msr.give_adm)
-const code = await conn.groupInviteCode(from)
-
- await conn.sendMessage(from , { text: `*🖇️ Group Link*\n\nhttps://chat.whatsapp.com/${code}`}, { quoted: mek } )
-} catch (e) {
-await conn.sendMessage(from, { react: { text: '❌', key: mek.key } })
-console.log(e)
-reply(`❌ *Error Accurated !!*\n\n${e}`)
-}
-} )
 
 cmd({
     pattern: "revoke",
