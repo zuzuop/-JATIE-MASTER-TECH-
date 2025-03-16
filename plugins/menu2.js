@@ -1,5 +1,5 @@
 
-
+const {getContextInfo} = require('./new')
 const config = require('../config')
 const {cmd , commands} = require('../command')
 cmd({
@@ -65,8 +65,11 @@ ${menu.settings}
 `
 
 
-await conn.sendMessage(from,{image:{url:config.MENU_IMG},caption:madeMenu},{quoted:mek})
-
+await conn.sendMessage(from,{image:{url:config.MENU_IMG},
+caption:madeMenu,
+contextInfo: getContextInfo(m.sender)
+},
+{quoted:mek})
 }catch(e){
 console.log(e)
 reply(`${e}`)
