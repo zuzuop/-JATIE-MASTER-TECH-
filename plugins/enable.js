@@ -5,10 +5,15 @@ const fs = require('fs');
 const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, sleep, fetchJson } = require('../lib/functions');
 const { writeFileSync } = require('fs');
 const path = require('path');
+const configPath = './config.json';
+let antilinkAction = "off"; 
 
-let antilinkAction = "off"; // Default state
-let warnCount = {}; // Track warnings per user
+// Function to save the config to a JSON file
+function saveConfig() {
+    fs.writeFileSync('./config.json', JSON.stringify(config, null, 2), 'utf-8');
+}
 
+// MODE COMMAND
 cmd({
     pattern: "mode",
     desc: "Set bot mode to private or public.",
@@ -17,7 +22,6 @@ cmd({
 }, async (conn, mek, m, { from, args, isOwner, reply }) => {
     if (!isOwner) return reply("*📛 Only the owner can use this command!*");
 
-    // Si aucun argument n'est fourni, afficher le mode actuel et l'usage
     if (!args[0]) {
         return reply(`📌 Current mode: *${config.MODE}*\n\nUsage: .mode private OR .mode public`);
     }
@@ -26,23 +30,24 @@ cmd({
 
     if (modeArg === "private") {
         config.MODE = "private";
+        saveConfig();  // Save the updated config
         return reply("✅ Bot mode is now set to *PRIVATE*.");
     } else if (modeArg === "public") {
         config.MODE = "public";
+        saveConfig();  // Save the updated config
         return reply("✅ Bot mode is now set to *PUBLIC*.");
     } else {
         return reply("❌ Invalid mode. Please use `.mode private` or `.mode public`.");
     }
 });
 
+// AUTO-TYPING COMMAND
 cmd({
     pattern: "autotyping",
-    alias: ["typing"],
     description: "Enable or disable auto-typing feature.",
     category: "settings",
     filename: __filename
-},    
-async (conn, mek, m, { from, args, isOwner, reply }) => {
+}, async (conn, mek, m, { from, args, isOwner, reply }) => {
     if (!isOwner) return reply("*📛 ᴏɴʟʏ ᴛʜᴇ ᴏᴡɴᴇʀ ᴄᴀɴ ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ!*");
 
     const status = args[0]?.toLowerCase();
@@ -51,19 +56,18 @@ async (conn, mek, m, { from, args, isOwner, reply }) => {
     }
 
     config.FAKE_TYPING = status === "on" ? "true" : "false";
+    saveConfig();  // Save the updated config
     return reply(`Auto typing has been turned ${status}.`);
 });
-//--------------------------------------------
-// ALWAYS_ONLINE COMMANDS
-//--------------------------------------------
+
+// ALWAYS ONLINE COMMAND
 cmd({
     pattern: "alwaysonline",
     alias: ["alwaysonline"],
     description: "Set bot status to always online or offline.",
     category: "settings",
     filename: __filename
-},    
-async (conn, mek, m, { from, args, isOwner, reply }) => {
+}, async (conn, mek, m, { from, args, isOwner, reply }) => {
     if (!isOwner) return reply("*📛 ᴏɴʟʏ ᴛʜᴇ ᴏᴡɴᴇʀ ᴄᴀɴ ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ!*");
 
     const status = args[0]?.toLowerCase();
@@ -73,19 +77,18 @@ async (conn, mek, m, { from, args, isOwner, reply }) => {
 
     config.ALWAYS_ONLINE = status === "on" ? "true" : "false";
     await conn.sendPresenceUpdate(status === "on" ? "available" : "unavailable", from);
+    saveConfig();  // Save the updated config
     return reply(`Bot is now ${status === "on" ? "online" : "offline"}.`);
 });
-//--------------------------------------------
-//  AUTO_RECORDING COMMANDS
-//--------------------------------------------
+
+// AUTO-RECORDING COMMAND
 cmd({
     pattern: "autorecording",
     alias: ["recoding"],
     description: "Enable or disable auto-recording feature.",
     category: "settings",
     filename: __filename
-},    
-async (conn, mek, m, { from, args, isOwner, reply }) => {
+}, async (conn, mek, m, { from, args, isOwner, reply }) => {
     if (!isOwner) return reply("*📛 ᴏɴʟʏ ᴛʜᴇ ᴏᴡɴᴇʀ ᴄᴀɴ ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ!*");
 
     const status = args[0]?.toLowerCase();
@@ -96,37 +99,62 @@ async (conn, mek, m, { from, args, isOwner, reply }) => {
     config.FAKE_RECORDING = status === "on" ? "true" : "false";
     if (status === "on") {
         await conn.sendPresenceUpdate("recording", from);
+        saveConfig();  // Save the updated config
         return reply("Auto recording is now enabled. Bot is recording...");
     } else {
         await conn.sendPresenceUpdate("available", from);
+        saveConfig();  // Save the updated config
         return reply("Auto recording has been disabled.");
     }
 });
-//--------------------------------------------
-// AUTO_VIEW_STATUS COMMANDS
-//--------------------------------------------
+
+// AUTO-VIEW STATUS COMMAND
 cmd({
     pattern: "autoreadstatus",
-    alias: ["autostatusview"],
+    alias: ["astatus"],
     desc: "Enable or disable auto-viewing of statuses",
     category: "settings",
     filename: __filename
-},    
-async (conn, mek, m, { from, args, isOwner, reply }) => {
+}, async (conn, mek, m, { from, args, isOwner, reply }) => {
     if (!isOwner) return reply("*📛 ᴏɴʟʏ ᴛʜᴇ ᴏᴡɴᴇʀ ᴄᴀɴ ᴜsᴇ ᴛʜɪs ᴄᴏᴍᴍᴀɴᴅ!*");
 
     const status = args[0]?.toLowerCase();
-    // Default value for AUTO_VIEW_STATUS is "false"
-    if (args[0] === "on") {
-        config.AUTO_READ_STATUS = "true";
-        return reply("Auto-viewing of statuses is now enabled.");
-    } else if (args[0] === "off") {
-        config.AUTO_READ_STATUS = "false";
-        return reply("Auto-viewing of statuses is now disabled.");
-    } else {
-        return reply(`*🫟 ᴇxᴀᴍᴘʟᴇ:  .ᴀᴜᴛᴏ-sᴇᴇɴ ᴏɴ*`);
+    if (!["on", "off"].includes(status)) {
+        return reply("*🫟 ᴇxᴀᴍᴘʟᴇ:  .ᴀᴜᴛᴏ-sᴇᴇɴ ᴏɴ*");
     }
-}); 
+
+    config.AUTO_READ_STATUS = status === "on" ? "true" : "false";
+    saveConfig();  // Save the updated config
+    return reply(`Auto-viewing of statuses is now ${status === "on" ? "enabled" : "disabled"}.`);
+});
+
+//============prefix=====================//
+
+// Change PREFIX Command
+cmd({
+    pattern: "prefix",
+    desc: "Set the bot command prefix.",
+    category: "settings",
+    filename: __filename
+}, async (conn, mek, m, { from, args, isOwner, reply }) => {
+    if (!isOwner) return reply("*📛 Only the owner can use this command!*");
+
+    if (!args[0]) {
+        return reply(`📌 Current prefix: *${config.PREFIX}*\n\nUsage: .prefix <new_prefix>`);
+    }
+
+    const newPrefix = args[0];
+
+    if (newPrefix.length > 1) {
+        return reply("❌ Prefix should be a single character.");
+    }
+
+    config.PREFIX = newPrefix;
+    saveConfig();  // Save the updated config
+    return reply(`✅ Bot prefix is now set to *${newPrefix}*.`);
+});
+
+
 //--------------------------------------------
 // AUTO_LIKE_STATUS COMMANDS
 //--------------------------------------------
@@ -283,7 +311,7 @@ async (conn, mek, m, { from, args, isOwner, reply }) => {
 //--------------------------------------------
 cmd({
     pattern: "autoreact",
-    alias: ["areact"],
+    alias: ["autoreact"],
     desc: "Enable or disable the autoreact feature",
     category: "settings",
     filename: __filename
@@ -442,25 +470,34 @@ cmd({
   category: "group",
   react: "🚫",
   filename: __filename
-}, async (conn, mek, m, { from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+}, async (conn, mek, m, { from, args, isGroup, isBotAdmins, isAdmins, reply }) => {
   try {
-    // Check for group, bot admin, and user admin permissions
-    if (!isGroup) return reply('This command can only be used in a group.');
-    if (!isBotAdmins) return reply('Bot must be an admin to use this command.');
-    if (!isAdmins) return reply('You must be an admin to use this command.');
+    // Check for group and admin permissions
+    if (!isGroup) return reply('❌ This command can only be used in a group.');
+    if (!isBotAdmins) return reply('❌ Bot must be an admin to use this command.');
+    if (!isAdmins) return reply('❌ You must be an admin to use this command.');
 
-    // Enable or disable anti-link feature
-    if (args[0] === "on") {
-      config.ANTI_LINK = "true";
-      await reply("Anti-link feature is now enabled in this group.");
-    } else if (args[0] === "off") {
-      config.ANTI_LINK = "false";
-      await reply("Anti-link feature is now disabled in this group.");
+    if (!args[0]) return reply(`⚠️ Please specify 'on' or 'off'.\n*Example:* antilink on`);
+    const option = args[0].toLowerCase();
+
+    // Load current config
+    let configData = JSON.parse(fs.readFileSync(configPath, 'utf-8'));
+
+    if (option === "on") {
+      configData.ANTI_LINK = "true";
+      await reply("✅ Anti-link feature is now *enabled* in this group.");
+    } else if (option === "off") {
+      configData.ANTI_LINK = "false";
+      await reply("❌ Anti-link feature is now *disabled* in this group.");
     } else {
-      await reply(`*Invalid input! Use either 'on' or 'off'. Example:antilink on*`);
+      return reply(`⚠️ Invalid option!\nUse either *'on'* or *'off'.\n*Example:* antilink on`);
     }
+
+    // Save the updated config
+    fs.writeFileSync(configPath, JSON.stringify(configData, null, 2));
+
   } catch (error) {
-    return reply(`*An error occurred while processing your request.*\n\n_Error:_ ${error.message}`);
+    return reply(`❗ *An error occurred while processing your request.*\n\n_Error:_ ${error.message}`);
   }
 });
 //--------------------------------------------
@@ -630,7 +667,7 @@ cmd({
 //           BROADCAST COMMANDS
 //--------------------------------------------
 cmd({
-  pattern: "broadcast2",
+  pattern: "broadcast",
   category: "group",
   desc: "Bot makes a broadcast in all groups",
   filename: __filename,
