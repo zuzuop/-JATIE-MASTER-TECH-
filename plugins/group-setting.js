@@ -1,3 +1,4 @@
+const {getContextInfo} = require('./new')
 const fs = require('fs');
 const config = require('../config')
 const { cmd, commands } = require('../command')
@@ -40,7 +41,8 @@ cmd({
             document: fs.readFileSync(nmfilect), 
             mimetype: 'text/vcard', 
             fileName: 'prince_tech.vcf', 
-            caption: `\nDone saving.\nGroup Name: *${cmiggc.subject}*\nContacts: *${cmiggc.participants.length}*`
+            caption: `\nDone saving.\nGroup Name: *${cmiggc.subject}*\nContacts: *${cmiggc.participants.length}*`,
+	contextInfo: getContextInfo(m.sender)
         }, { quoted: mek });
 
         fs.unlinkSync(nmfilect); // Cleanup the file after sending
