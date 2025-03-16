@@ -170,7 +170,7 @@ if(isReact) return
 m.react("🎀")
    }
 //==============ANTILINK============================//
-  const db = require('./database'); // Import the database functions
+  const db = require('./data/database'); // Import the database functions
 
 if (config.ANTI_LINK == "true") {
     if (!isOwner && isGroup && isBotAdmins) {
