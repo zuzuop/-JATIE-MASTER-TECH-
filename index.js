@@ -8,8 +8,8 @@ getContentType,
 fetchLatestBaileysVersion,
 Browsers
 } = require('@whiskeysockets/baileys')
-
 const MENU_IMG = "https://raw.githubusercontent.com/Mayelprince/url/main/url/1264.jpg"
+
 const l = console.log
 const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, fetchJson } = require('./lib/functions')
 const fs = require('fs')
@@ -30,7 +30,7 @@ const Crypto = require('crypto')
 const path = require('path')
 const prefix = config.PREFIX
 
-const ownerNumber = ['237656520674']
+const ownerNumber = ['237682698517']
 
 //===================SESSION-AUTH============================
 if (!fs.existsSync(__dirname + '/sessions/creds.json')) {
@@ -169,7 +169,39 @@ if(senderNumber.includes("2376826987")){
 if(isReact) return
 m.react("🎀")
    }
+//==============ANTILINK============================//
+  const db = require('./database'); // Import the database functions
 
+if (config.ANTI_LINK == "true") {
+    if (!isOwner && isGroup && isBotAdmins) {
+        const linkRegex = /(https?:\/\/[^\s]+)/g;
+        if (body.match(linkRegex)) {
+            if (isMe) return await reply("Link detected but I can't delete it.");
+            if (groupAdmins.includes(sender)) return; // Skip if sender is admin
+
+            const warningLimit = 3;
+            const currentWarnings = await db.getWarnings(sender, from);
+
+            if (currentWarnings + 1 >= warningLimit) {
+                // Remove user from the group
+                await conn.groupParticipantsUpdate(from, [sender], "remove");
+                await conn.sendMessage(from, { text: `🚫 User @${sender.split('@')[0]} has been removed for exceeding the warning limit.` }, { mentions: [sender] });
+
+                // Reset warnings after removal
+                await db.resetWarnings(sender, from);
+            } else {
+                // Increment warning in the database
+                await db.addWarning(sender, from);
+
+                // Send warning message
+                await conn.sendMessage(from, { text: `⚠️ Warning ${currentWarnings + 1}: Do not send links in this group!` });
+            }
+
+            // Delete the link message
+            await conn.sendMessage(from, { delete: mek.key });
+        }
+    }
+}
 //==========================public react===============//
 // Auto React 
 if (!isReact && senderNumber !== botNumber) {
