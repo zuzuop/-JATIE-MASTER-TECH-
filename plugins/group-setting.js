@@ -287,53 +287,43 @@ async (conn, mek, m, { from, participants, reply, isGroup, senderNumber, groupAd
         reply(`❌ *Error Occurred !!*\n\n${e.message || e}`);
     }
 });
+//add//
 
 cmd({
     pattern: "add",
-    alias: ["aja"],
-    react: "➕",
+    alias: ["invite"],
     desc: "Adds a user to the group.",
     category: "group",
     filename: __filename,
     use: '<number>',
 },           
-async (conn, mek, m, { from, args, q, isGroup, senderNumber, botNumber, reply }) => {
+async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
     try {
-        if (!isGroup) return reply("*📛 This command can only be used in groups.*");
-
-        // Extract bot owner's number
-        const botOwner = conn.user.id.split(":")[0];
-
-        // Restrict command usage to the bot owner only
-        if (senderNumber !== botOwner) {
-            return reply("*📛 Only the bot owner can use this command.*");
-        }
-
-        // Ensure the bot is an admin
-        if (!isBotAdmins) return reply("*📛 I need to be an admin to add users.*");
-
-        // Validate user input
-        if (!q || isNaN(q)) return reply("*📛 Please provide a valid phone number to add.*");
+        // Check if the command is used in a group
+        if (!m.isGroup) return reply(`This command is only for groups.`);
         
-        const userToAdd = `${q}@s.whatsapp.net`;
+        // Check if the bot has admin privileges
+        if (!isBotAdmins) return reply(`I need admin privileges to add users.`);
+        
+        // Check if the number is provided (from q or args)
+        if (!q || isNaN(q)) return reply('Please provide a valid phone number to add.');
+        
+        const userToAdd = `${q}@s.whatsapp.net`;  // Format the phone number
 
-        // Attempt to add the user to the group
-        let response = await conn.groupParticipantsUpdate(from, [userToAdd], "add");
+        // Add the user to the group
+        await conn.groupParticipantsUpdate(m.chat, [userToAdd], "add");
 
-        // Check if the user was successfully added
-        if (response[0].status === 200) {
-            reply(`✅ User *${q}* has been added to the group.`);
-        } else {
-            reply("❌ Failed to add user. Make sure the number is correct and they are not already in the group.");
-        }
+        // Confirm the addition
+        reply(`User ${q} has been added to the group.`);
     } catch (e) {
-        console.error("Error adding user:", e);
-        reply("❌ An error occurred while adding the user. Please try again.");
+        console.error('Error adding user:', e);
+        reply('An error occurred while adding the user. Please make sure the number is correct and they are not already in the group.');
     }
 });
 
+
 cmd({
-    pattern: "updategdesc",
+    pattern: "setgcdesc",
     alias: ["upgdesc", "gdesc"],
     react: "📜",
     desc: "Change the group description.",
@@ -356,7 +346,7 @@ async (conn, mek, m, { from, isGroup, isAdmins, isBotAdmins, args, q, reply }) =
 });
 
 cmd({
-    pattern: "updategname",
+    pattern: "setgcname",
     alias: ["upgname", "gname"],
     react: "📝",
     desc: "Change the group name.",
@@ -377,6 +367,34 @@ async (conn, mek, m, { from, isGroup, isAdmins, isBotAdmins, args, q, reply }) =
         reply("❌ Failed to update the group name. Please try again.");
     }
 });
+
+//delete//
+
+cmd({
+    pattern: "delete",
+    react: "⛔",
+    alias: [","],
+    desc: "delete message",
+    category: "group",
+    use: '.del',
+    filename: __filename
+},
+async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+    try{
+    const key = {
+                    remoteJid: m.chat,
+                    fromMe: false,
+                    id: m.quoted.id,
+                    participant: m.quoted.sender
+                }
+                await conn.sendMessage(m.chat, { delete: key })
+} catch (e) {
+reply('*Error !!*')
+l(e)
+}
+})
+
+
 
 cmd({
     pattern: "leave",
