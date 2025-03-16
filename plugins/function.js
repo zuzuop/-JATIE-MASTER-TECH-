@@ -1,69 +1,77 @@
-const { cmd } = require('../command');
+
+
+const { cmd } = require('../command')
 const fs = require('fs');
 const path = require('path');
-const config = require('../config');
-const db = require('./database'); // Import the database functions
-
+const config = require('../config')
 // List of bad words to check against
-const badWords = ["wtf", "mia", "xxx", "fuck", "sex", "huththa", "pakaya", "ponnaya", "hutto"];
+ // Replace with actual words
+cmd({
+  on: "body"
+},
+async (conn,mek, m, { from, body, isGroup, isAdmins, isBotAdmins, reply, sender }) => {
+    try {
+    
+        const badWords = ["wtf", "mia", "xxx","fuck","sex","huththa","pakaya","ponnaya","hutto"]
+        if (!isGroup || isAdmins || !isBotAdmins) return; // Skip if not in group, or sender is admin, or bot is not admin
+      
+        const lowerCaseMessage = body.toLowerCase();
+        const containsBadWord = badWords.some(word => lowerCaseMessage.includes(word));
+        
+        if (containsBadWord & config.ANTI_BAD_WORD === 'true') {
+          await conn.sendMessage(from, { delete: mek.key }, { quoted: mek });
+          await conn.sendMessage(from, { text: "🚫 ⚠️BAD WORDS NOT ALLOWED⚠️ 🚫" }, { quoted: mek });
+        }
+    } catch (error) {
+        console.error(error)
+        reply("An error occurred while processing the message.")
+    }
+})
+
+
+const linkPatterns = [
+    /https?:\/\/(?:chat\.whatsapp\.com|wa\.me)\/\S+/gi,   // WhatsApp group or chat links
+    /wa\.me\/\S+/gi,                                      // wa.me links without https
+    /https?:\/\/(?:t\.me|telegram\.me)\/\S+/gi,           // Telegram links
+    /https?:\/\/(?:www\.)?youtube\.com\/\S+/gi,           // YouTube links
+    /https?:\/\/youtu\.be\/\S+/gi,                        // YouTube short links
+    /https?:\/\/(?:www\.)?facebook\.com\/\S+/gi,          // Facebook links
+    /https?:\/\/fb\.me\/\S+/gi,                           // Facebook short links
+    /https?:\/\/(?:www\.)?instagram\.com\/\S+/gi,         // Instagram links
+    /https?:\/\/(?:www\.)?twitter\.com\/\S+/gi,           // Twitter links
+    /https?:\/\/(?:www\.)?tiktok\.com\/\S+/gi,            // TikTok links
+    /https?:\/\/(?:www\.)?linkedin\.com\/\S+/gi,          // LinkedIn links
+    /https?:\/\/(?:www\.)?snapchat\.com\/\S+/gi,          // Snapchat links
+    /https?:\/\/(?:www\.)?pinterest\.com\/\S+/gi,         // Pinterest links
+    /https?:\/\/(?:www\.)?reddit\.com\/\S+/gi,            // Reddit links
+    /https?:\/\/ngl\/\S+/gi,                              // NGL links
+    /https?:\/\/(?:www\.)?discord\.com\/\S+/gi,           // Discord links
+    /https?:\/\/(?:www\.)?twitch\.tv\/\S+/gi,             // Twitch links
+    /https?:\/\/(?:www\.)?vimeo\.com\/\S+/gi,             // Vimeo links
+    /https?:\/\/(?:www\.)?dailymotion\.com\/\S+/gi,       // Dailymotion links
+    /https?:\/\/(?:www\.)?medium\.com\/\S+/gi             // Medium links
+];
 
 cmd({
     on: "body"
-}, async (conn, mek, m, { from, body, isGroup, isAdmins, isBotAdmins, reply, sender }) => {
+}, async (conn, mek, m, { from, body, sender, isGroup, isAdmins, isBotAdmins, reply }) => {
     try {
-        if (!isGroup || !isBotAdmins) return; // Skip if not in group or bot is not an admin
+        if (!isGroup || isAdmins || !isBotAdmins) return; // Skip if not in group, or sender is admin, or bot is not admin
 
-        const lowerCaseMessage = (body || '').toLowerCase();
-        const containsBadWord = badWords.some(word => lowerCaseMessage.includes(word));
+        const containsLink = linkPatterns.some(pattern => pattern.test(body));
 
-        if (containsBadWord && config.ANTI_BAD_WORD === 'true' && !isAdmins) {
+        if (containsLink && config.ANTI_LINK === 'true') {
             // Delete the message
-            await conn.sendMessage(from, { delete: mek.key });
-            // Send warning message
-            await conn.sendMessage(from, { text: "🚫 ⚠️ BAD WORDS NOT ALLOWED ⚠️ 🚫" }, { quoted: mek });
+            await conn.sendMessage(from, { delete: mek.key }, { quoted: mek });
+
+            // Warn the user
+            await conn.sendMessage(from, { text: `⚠️ Links are not allowed in this group.\n@${sender.split('@')[0]} has been removed. 🚫`, mentions: [sender] }, { quoted: mek });
+
+            // Remove the user from the group
+            await conn.groupParticipantsUpdate(from, [sender], 'remove');
         }
     } catch (error) {
         console.error(error);
         reply("An error occurred while processing the message.");
     }
 });
-
-// Link detection and warning system
-if (config.ANTI_LINK === "true") {
-    cmd({
-        on: "body"
-    }, async (conn, mek, m, { from, body, sender, isGroup, isAdmins, isBotAdmins, reply }) => {
-        try {
-            if (!isGroup || !isBotAdmins) return; // Skip if not in group or bot is not an admin
-
-            const linkRegex = /(https?:\/\/[^\s]+)/g;
-            if (body.match(linkRegex)) {
-                if (isAdmins || isBotAdmins || sender === from) return; // Skip if sender is admin or bot admin
-
-                const warningLimit = 3;
-                const currentWarnings = await db.getWarnings(sender, from);
-
-                if (currentWarnings + 1 >= warningLimit) {
-                    // Remove user from the group
-                    await conn.groupParticipantsUpdate(from, [sender], "remove");
-                    await conn.sendMessage(from, { text: `🚫 User @${sender.split('@')[0]} has been removed for exceeding the warning limit.` }, { mentions: [sender] });
-
-                    // Reset warnings after removal
-                    await db.resetWarnings(sender, from);
-                } else {
-                    // Increment warning in the database
-                    await db.addWarning(sender, from);
-
-                    // Send warning message
-                    await conn.sendMessage(from, { text: `⚠️ Warning ${currentWarnings + 1}: Do not send links in this group!` });
-                }
-
-                // Delete the link message
-                await conn.sendMessage(from, { delete: mek.key });
-            }
-        } catch (error) {
-            console.error(error);
-            reply("An error occurred while processing the message.");
-        }
-    });
-}
