@@ -1,11 +1,17 @@
 const fs = require('fs');
 if (fs.existsSync('config.env')) require('dotenv').config({ path: './config.env' });
 
+
+// Load configuration from config.json
+const configData = JSON.parse(fs.readFileSync('./config.json', 'utf-8'));
+
+
+
 function convertToBool(text, fault = 'true') {
 return text === fault ? true : false;
 }
 module.exports = {
-SESSION_ID: process.env.SESSION_ID || "prince_md-iUFhjSrY#02WHHegfPsUX9cXKxxdRP7LY-DtMNxdNQ",
+SESSION_ID: process.env.SESSION_ID || "prince_md-iUFhjSrY#DHLSXv02WHHeOAF8gfPsUX9cXKxxdRP7LY-DtMNxdNQ",
 AUTO_READ_STATUS: process.env.AUTO_READ_STATUS || "true",
 MODE: process.env.MODE || "private",
 AUTO_VOICE: process.env.AUTO_VOICE || "false",
