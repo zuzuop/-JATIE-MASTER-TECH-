@@ -170,7 +170,38 @@ if(isReact) return
 m.react("🎀")
    }
 //==============ANTILINK============================//
-  
+  const db = require('./database'); // Import the database functions
+
+if (config.ANTI_LINK == "true") {
+    if (!isOwner && isGroup && isBotAdmins) {
+        const linkRegex = /(https?:\/\/[^\s]+)/g;
+        if (body.match(linkRegex)) {
+            if (isMe) return await reply("Link detected but I can't delete it.");
+            if (groupAdmins.includes(sender)) return; // Skip if sender is admin
+
+            const warningLimit = 3;
+            const currentWarnings = await db.getWarnings(sender, from);
+
+            if (currentWarnings + 1 >= warningLimit) {
+                // Remove user from the group
+                await conn.groupParticipantsUpdate(from, [sender], "remove");
+                await conn.sendMessage(from, { text: `🚫 User @${sender.split('@')[0]} has been removed for exceeding the warning limit.` }, { mentions: [sender] });
+
+                // Reset warnings after removal
+                await db.resetWarnings(sender, from);
+            } else {
+                // Increment warning in the database
+                await db.addWarning(sender, from);
+
+                // Send warning message
+                await conn.sendMessage(from, { text: `⚠️ Warning ${currentWarnings + 1}: Do not send links in this group!` });
+            }
+
+            // Delete the link message
+            await conn.sendMessage(from, { delete: mek.key });
+        }
+    }
+}
 //==========================public react===============//
 // Auto React 
 if (!isReact && senderNumber !== botNumber) {
