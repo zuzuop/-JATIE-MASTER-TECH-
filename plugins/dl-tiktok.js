@@ -1,17 +1,6 @@
 
-/**
 
-
- Copyright (C) 2025.
- Licensed under the  GPL-3.0 License;
- You may not sell this script.
- It is supplied in the hope that it may be useful.
- * @project_name : Free Bot script
- * @author : Malvin King <https://github.com/kingmalvn>
- * @description : A Multi-functional whatsapp bot script.
- * @version 3.0.0
- **/
-
+const {getContextInfo} = require('./new')
 const { cmd } = require('../command');
 const axios = require('axios');
 
@@ -44,7 +33,7 @@ async (conn, mek, m, { from, args, q, reply }) => {
         await conn.sendMessage(from, {
             video: { url: videoUrl },
             caption: caption,
-            contextInfo: { mentionedJid: [m.sender] }
+            contextInfo: getContextInfo(m.sender)
         }, { quoted: mek });
         
     } catch (e) {
