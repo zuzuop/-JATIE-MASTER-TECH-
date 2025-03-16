@@ -1,3 +1,4 @@
+const {getContextInfo} = require('./new')
 const config = require('../config');
 const {
   cmd,
@@ -39,14 +40,15 @@ async(conn, mek, m, {from, quoted, body, isCmd, command, args, q, isGroup, sende
        
         await conn.sendMessage(from, {
             image: { url: audio.thumbnail },
-            caption: message
+            caption: message,
+          contextInfo: getContextInfo(m.sender)
         });
 
         await conn.sendMessage(from, {
             document: { url: audio.download },
             mimetype: 'audio/mp3',
             fileName: `${audio.title}.mp3`,
-            caption: `> prince tech`
+            caption: `> PRINCE TECH'
         });
 
         await conn.sendMessage(from, {
