@@ -28,6 +28,35 @@ reply(`❌ *Error Accurated !!*\n\n${e}`)
 } )
 
 
+//kick//
+
+
+cmd({
+    pattern: "kick",
+    alias: [".."],
+    desc: "Kicks replied/quoted user from group.",
+    category: "group",
+    filename: __filename,
+    use: '<quote|reply|number>',
+  },           
+      async(conn, mek, m,{from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
+     try {
+         if (!m.isGroup) return reply(`only for groups`);
+    if (!isBotAdmins) return reply(`I can't do that. give group admin`);
+  
+  
+      const user = m.quoted.sender;
+      if (!user) return reply(`*Please give me a user to kick ❗*`);
+      await conn.groupParticipantsUpdate(m.chat, [user], "remove");
+     reply(`${user} *has been kicked out of the group!* \n\n${yn} `);
+    } catch (e) {
+  reply('*Done ✓✓*')
+  l(e)
+  }
+  })
+
+
+
 cmd({
     pattern: "invite",
     react: "🖇️",
