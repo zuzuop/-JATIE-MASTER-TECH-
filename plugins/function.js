@@ -2,7 +2,7 @@ const { cmd } = require('../command');
 const fs = require('fs');
 const path = require('path');
 const config = require('../config');
-const db = require('./data/database'); // Import the database functions
+const db = require('./database'); // Import the database functions
 
 // List of bad words to check against
 const badWords = ["wtf", "mia", "xxx", "fuck", "sex", "huththa", "pakaya", "ponnaya", "hutto"];
