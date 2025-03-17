@@ -76,7 +76,7 @@ cmd({
     react: '👁️',
     alias: ['vv', 'viewonce'],
     desc: 'Download and send view once media (images, videos, or audios).',
-    category: 'media',
+    category: 'convert',
     use: '.viewonce <Reply to image/video/audio>',
     filename: __filename
 }, async (conn, mek, m, { from, reply, isCmd, command, args, q, isGroup, pushname }) => {
