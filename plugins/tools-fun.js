@@ -166,7 +166,7 @@ cmd({
       return reply("❌ Failed to fetch a fun fact. Please try again.");
     }
 
-    const factMessage = `🧠 *Random Fun Fact* 🧠\n\n${fact}\n\nIsn't that interesting? 😄\n\n> *Powered by your name *`;
+    const factMessage = `🧠 *Random Fun Fact* 🧠\n\n${fact}\n\nIsn't that interesting? 😄\n\n> *ᴘᴏᴡᴇʀᴇᴅ  ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ *`;
 
     return reply(factMessage);
   } catch (error) {
