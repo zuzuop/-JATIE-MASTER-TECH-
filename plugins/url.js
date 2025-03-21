@@ -1,143 +1,65 @@
-const axios = require('axios');
-const config = require('../config'); // Make sure to add your API key here
-const { cmd, commands } = require('../command');
-const fs = require('fs');
-const path = require('path');
-const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, sleep, fetchJson} = require('../lib/functions');
-const cheerio = require('cheerio');
-const fetch = require('node-fetch');
-const googleTTS = require("google-tts-api");
-const { Sticker, createSticker, StickerTypes } = require("wa-sticker-formatter");
-const { tmpdir } = require("os")
-const Crypto = require("crypto")
-const ffmpegPath = require('@ffmpeg-installer/ffmpeg').path;
-const ffmpeg = require('fluent-ffmpeg')
-let { img2url } = require('@blackamda/telegram-image-url');
-ffmpeg.setFfmpegPath(ffmpegPath);
-async function videoToWebp (media) {
-
-    const tmpFileOut = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.webp`)
-    const tmpFileIn = path.join(tmpdir(), `${Crypto.randomBytes(6).readUIntLE(0, 6).toString(36)}.mp4`)
-
-    fs.writeFileSync(tmpFileIn, media)
-
-    await new Promise((resolve, reject) => {
-        ffmpeg(tmpFileIn)
-            .on("error", reject)
-            .on("end", () => resolve(true))
-            .addOutputOptions([
-                "-vcodec",
-                "libwebp",
-                "-vf",
-                "scale='min(320,iw)':min'(320,ih)':force_original_aspect_ratio=decrease,fps=15, pad=320:320:-1:-1:color=white@0.0, split [a][b]; [a] palettegen=reserve_transparent=on:transparency_color=ffffff [p]; [b][p] paletteuse",
-                "-loop",
-                "0",
-                "-ss",
-                "00:00:00",
-                "-t",
-                "00:00:05",
-                "-preset",
-                "default",
-                "-an",
-                "-vsync",
-                "0"
-            ])
-            .toFormat("webp")
-            .save(tmpFileOut)
-    })
-
-    const buff = fs.readFileSync(tmpFileOut)
-    fs.unlinkSync(tmpFileOut)
-    fs.unlinkSync(tmpFileIn)
-    return buff
-}
-
-function toAudio(buffer, ext) {
-  return ffmpeg(buffer, [
-    '-vn',
-    '-ac', '2',
-    '-b:a', '128k',
-    '-ar', '44100',
-    '-f', 'mp3'
-  ], ext, 'mp3')
-}
-
-function toPTT(buffer, ext) {
-  return ffmpeg(buffer, [
-    '-vn',
-    '-c:a', 'libopus',
-    '-b:a', '128k',
-    '-vbr', 'on',
-    '-compression_level', '10'
-  ], ext, 'opus')
-}
-
-function toVideo(buffer, ext) {
-  return ffmpeg(buffer, [
-    '-c:v', 'libx264',
-    '-c:a', 'aac',
-    '-ab', '128k',
-    '-ar', '44100',
-    '-crf', '32',
-    '-preset', 'slow'
-  ], ext, 'mp4')
-}
-
-
-
-
+const axios = require("axios");
+const FormData = require("form-data");
+const fs = require("fs");
+const os = require("os");
+const path = require("path");
+const { cmd } = require("../command");
 
 cmd({
-    pattern: "toptt",
-    react: "🔊",
-    alias: ["toaudio","tomp3"],
-    desc: "convert to audio",
-    category: "convert",
-    use: '.toptt <Reply to video>',
-    filename: __filename
-},
-async(conn, mek, m,{from, l, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
-try{
-    let isquotedvid = m.quoted ? (m.quoted.type === 'videoMessage') : m ? (m.type === 'videoMessage') : false
-    if(!isquotedvid) return await reply()
-    let media = m.quoted ? await m.quoted.download() : await m.download()
-    let auddio = await toPTT(media, 'mp4')
-    let senda =  await conn.sendMessage(m.chat, {audio: auddio.options, mimetype:'audio/mpeg'}, {quoted:m})
-    await conn.sendMessage(from, { react: { text: '🎼', key: senda.key }})
-} catch (e) {
-reply('*Error !!*')
-l(e)
-}
-})       
+  pattern: "tourl",
+  alias: ["imgtourl", "img2url", "url"],
+  react: "🖇",
+  desc: "Convert an image to a URL using ImgBB.",
+  category: "utility",
+  use: ".tourl (Reply to an image)",
+  filename: __filename
+}, async (conn, m, store, { from, quoted, reply, sender }) => {
+  try {
+    const targetMsg = quoted ? quoted : m;
+    const mimeType = (targetMsg.msg || targetMsg).mimetype || "";
 
+    if (!mimeType || !mimeType.startsWith("image")) {
+      return reply("❌ Please reply to an image.");
+    }
 
-cmd({
-    pattern: "img2url",
-    react: "🔗",
-    alias: ["tourl","imgurl","telegraph","imgtourl"],
-    desc: "to convert image to url",
-    category: "convert",
-    use: '.img2url <reply image>',
-    filename: __filename
-},
-async(conn, mek, m,{from, l, prefix, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply}) => {
-    try{
-    const isQuotedViewOnce = m.quoted ? (m.quoted.type === 'viewOnceMessage') : false
-    const isQuotedImage = m.quoted ? ((m.quoted.type === 'imageMessage') || (isQuotedViewOnce ? (m.quoted.msg.type === 'imageMessage') : false)) : false
-    if ((m.type === 'imageMessage') || isQuotedImage) {
-const fileType = require("file-type");
-  var nameJpg = getRandom('');
-  let buff = isQuotedImage ? await m.quoted.download(nameJpg) : await m.download(nameJpg)
-  let type = await fileType.fromBuffer(buff);
-  await fs.promises.writeFile("./" + type.ext, buff);
-  img2url("./" + type.ext).then(async url => {
-    await reply('\n' + url + '\n');
+    reply("🔄 Uploading image...");
+
+    const imageBuffer = await targetMsg.download();
+    const tempFilePath = path.join(os.tmpdir(), "temp_image.jpg");
+    fs.writeFileSync(tempFilePath, imageBuffer);
+
+    const formData = new FormData();
+    formData.append("image", fs.createReadStream(tempFilePath));
+
+    const { data } = await axios.post("https://api.imgbb.com/1/upload?key=e909ac2cc8d50250c08f176afef0e333", formData, {
+      headers: formData.getHeaders(),
+    });
+
+    fs.unlinkSync(tempFilePath); // Delete temp file
+
+    if (!data || !data.data || !data.data.url) {
+      throw "❌ Failed to upload the image.";
+    }
+
+    const imageUrl = data.data.url;
+    const msgContext = {
+      mentionedJid: [sender],
+      forwardingScore: 999,
+      isForwarded: true,
+      forwardedNewsletterMessageInfo: {
+        newsletterJid: "120363306168354073@newsletter",
+        newsletterName: "ᴍᴀʟᴠɪɴ ᴋɪɴɢ",
+        serverMessageId: 143
+      }
+    };
+
+    await conn.sendMessage(from, {
+      text: `✅ *Image Uploaded Successfully 📸*\n📏 *Size:* ${imageBuffer.length} Bytes\n🔗 *URL:* ${imageUrl}\n\n> ⚖️ *Uploaded via MALVIN-AI*`,
+      contextInfo: msgContext
+    });
+
+  } catch (error) {
+    reply("❌ Error: " + error.message);
+    console.error("Upload Error:", error);
+  }
 });
-    } else return reply()
-} catch (e) {
-  reply();
-  l(e);
-}
-}); 
-
-
