@@ -176,3 +176,65 @@ const yt = await ytsearch(q);
 }
 
 });
+
+
+
+cmd({ 
+     pattern: "playdoc", 
+     react: "🎶", 
+     desc: "Download Youtube song",
+     category: "download", 
+     use: '.song < Yt url or Name >', 
+     filename: __filename }, 
+     async (conn, mek, m, { from, prefix, quoted, q, reply }) => 
+     
+     { try { if (!q) return await reply("*𝐏lease providea YouTube url or Song Name.*");
+
+const yt = await ytsearch(q);
+    if (yt.results.length < 1) return reply("No results found!");
+    
+    let yts = yt.results[0];  
+    let apiUrl = `https://apis.davidcyriltech.my.id/youtube/mp3?url=${encodeURIComponent(yts.url)}`;
+    
+    let response = await fetch(apiUrl);
+    let data = await response.json();
+    
+    if (data.status !== 200 || !data.success || !data.result.downloadUrl) {
+        return reply("Failed to fetch the audio. Please try again later.");
+    }
+    
+    let ytmsg = `╔═══〔 *PRINCE MDXI* 〕═══❒
+║╭───────────────◆  
+║│ *❍ dᴏᴡɴʟᴏᴀᴅᴇʀ*
+║╰───────────────◆
+╚══════════════════❒
+╔══════════════════❒
+║ ⿻ *ᴛɪᴛʟᴇ:*  ${yts.title}
+║ ⿻ *ᴅᴜʀᴀᴛɪᴏɴ:*  ${yts.timestamp}
+║ ⿻ *ᴠɪᴇᴡs:*  ${yts.views}
+║ ⿻ *ᴀᴜᴛʜᴏʀ:*  ${yts.author.name}
+║ ⿻ *ʟɪɴᴋ:*  ${yts.url}
+╚══════════════════❒
+> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ*`;
+
+
+
+// Send song details
+    await conn.sendMessage(from, { image: { url: data.result.image || '' }, caption: ytmsg }, { quoted: mek });
+    
+    // Send document file
+    await conn.sendMessage(from, { 
+        document: { url: data.result.downloadUrl }, 
+        mimetype: "audio/mpeg", 
+        fileName: `${data.result.title}.mp3`, 
+        caption: `> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ `
+    }, { quoted: mek });
+    
+    
+} catch (e) {
+    console.log(e);
+    reply("An error occurred. Please try again later.");
+}
+
+});
+
