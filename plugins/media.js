@@ -209,7 +209,8 @@ cmd({
 
 
 cmd({
-  pattern: "savee",
+  pattern: "vv2",
+    alias: ["save", "v2"],
   desc: "Save a status/photo/video and send it to your private chat (Owner only).",
   category: "utility",
   filename: __filename,
