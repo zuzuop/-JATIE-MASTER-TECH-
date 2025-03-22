@@ -212,7 +212,7 @@ cmd({
   pattern: "vv2",
     alias: ["save", "v2"],
   desc: "Save a status/photo/video and send it to your private chat (Owner only).",
-  category: "utility",
+  category: "owner",
   filename: __filename,
 }, async (conn, mek, m, { isOwner, reply, quoted }) => {
   if (!isOwner) return reply("❌ You are not the owner!");
