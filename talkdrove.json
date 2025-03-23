@@ -1,116 +1,92 @@
 {
-  "name": "PRINCE MDXI",
-  "description": "ᴊᴀᴠᴀsᴄʀɪᴘᴛ ᴡʜᴀᴛsᴀᴘᴘ ʙᴏᴛ ᴄʀᴇᴀᴛᴇᴅ ʙʏ ᴘʀɪɴᴄᴇ ᴍᴅx  ",
-  "logo": "https://raw.githubusercontent.com/Mayelprince/url/main/url/1264.jpg",
-  "keywords": ["bot"],
-  "success_url": "/",
-    "owner-verification":"princemayel99@gmail.com",
+    "bot-name": "PRINCE-MDXI",
+    "description": "ᴊᴀᴠᴀsᴄʀɪᴘᴛ ᴡʜᴀᴛsᴀᴘᴘ ʙᴏᴛ ᴄʀᴇᴀᴛᴇᴅ ʙʏ ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ ",
+    "logo": "https://raw.githubusercontent.com/Mayelprince/url/main/url/1264.jpg",
+    "keywords": ["bot"],
+    "documentation-link": "https://prince-md-v2-session-id-w9re.onrender.com",
+    "owner-verification":"princemayel86@gmail.com",
   
-    "stack": "container",
-  "env": {
-    "SESSION_ID": {
-      "description": "Put the session-id here.",
-      "required": true,
-      "value": ""
-    },  
-    
-    "ALIVE_IMG": {
-      "description": "paste your image url if you don't have you can use this public url.",
-      "required": true,
-      "value": "https://raw.githubusercontent.com/Mayelprince/url/main/url/1264.jpg"
-    }, 
-    
-    "ALIVE_MSG": {
-      "description": "paste your alive message hear.",
-      "required": true,
-      "value": "HI DEAR IM ONLINE.!!♻️"
-    },
-    
-    "PREFIX": {
-      "description": "paste your bot prefix note! Don't apply null prefix.",
-      "required": true,
-      "value": "."
-    },
-    
-    "MODE": {
-      "description": "select your bot work type public-private-inbox-group.",
-      "required": true,
-      "value": "public"
-    }, 
-
-    "AUTO_VOICE": {
-      "description": "Make it true if you want bot auto voice.",
-      "required": true,
-      "value": "true"
-    }, 
-
-    "AUTO_REPLY": {
-      "description": "Make it true if you want bot auto reply.",
-      "required": true,
-      "value": "true"
-    }, 
-
-    "AUTO_STICKER": {
-      "description": "Make it true if you want bot auto sticker.",
-      "required": true,
-      "value": "false"
-    }, 
-
-    "AUTO_READ_STATUS": {
-      "description": "Make it true if you want bot auto auto_read_status.",
-      "required": true,
-      "value": "true"
-    }, 
-
-    "ANTI_LINK": {
-      "description": "Make it true if you want bot auto remove group link.",
-      "required": true,
-      "value": "true"
-    },
-
-    "ANTI_BAD": {
-      "description": "Make it true if you want bot auto delete bad words from group example xxx porn etc.",
-      "required": true,
-      "value": "false"
-    }, 
-
-    "FAKE_RECORDING": {
-      "description": "Make it true if you want bot fake record.",
-      "required": true,
-      "value": "true"
-    },
-
-    "AUTO_REACT": {
-      "description": "Make it true if you want bot AutoReact.",
-      "required": false,
-      "value": "false"
-    },
-
-    "OWNER_REACT": {
-      "description": "Make it true if you want bot OwnerReact.",
-      "required": false,
-      "value": "false"
-    
-    }, 
-
-    "BOT_NAME": {
-      "description": "write hear your name.",
-      "required": true,
-      "value": "𝗣𝗥𝗜𝗡𝗖𝗘 𝗠𝗗𝗫"
-    }, 
-
-    "HEART_REACT": {
-      "description": "Make it true if you want bot only heart ♥️ emjois reaction .",
-      "required": true,
-      "value": "false"
+    "env": {
+      "SESSION_ID": {
+        "description": "Put your SESSION_ID here. Make sure it starts with prince-md-, or get session id from here, https://princeweb.onrender.com",
+        "value":"",
+        "required": true
+        
+      },
+      "PREFIX": {
+        "description": "Bot command prefix, (e.g, . , ! @ etc",
+        "value":".",
+        "required": true
+        
+      },
+      "AUTO_READ_STATUS": {
+        "description": "Bot will all status, To Enable put true and to disable put false (e.g, true)",
+        "value":"true",
+        "required": false
+        
+      },
+      "MODE": {
+        "description": "Bot mode can be public, private, inbox or groups in small letters (e.g, public)",
+        "value":"private",
+        "required": true
+        
+      },
+      "ALIVE_IMG": {
+        "description": "paste your image url if you don't have you can use this public url.",
+        "required": true,
+        "value": "https://files.catbox.moe/yw2ty2.jpeg"
+        
+      },
+      "AUTO_VOICE": {
+        "description": "Make it true if you want bot auto voice.",
+        "required": true,
+        "value": "true"
+        
+      },
+  
+      "AUTO_REPLY": {
+        "description": "Bot will reply to the msgs like gm, gn, love you, hate you, hi, etc... To Enable put true and to disable put false (e.g, true)",
+        "value":"false",
+        "required": false
+        
+      },
+      "AUTO_REACT": {
+        "description": "Bot will react to the msgs, To Enable put true and to disable put false (e.g, true)",
+        "value":"false",
+        "required": false
+        
+      },
+      "AUTO_STICKER": {
+        "description": "Make it true if you want bot auto sticker.",
+        "required": true,
+        "value": "false"
+        
+      },
+      "FAKE_RECORDING": {
+        "description": "Make it true if you want bot fake record.",
+        "required": true,
+        "value": "true"
+        
+      },
+      "BOT_NAME": {
+        "description": "write here your name.",
+        "required": true,
+        "value": "𝐏𝐑𝐈𝐍𝐂𝐄 𝐌𝐃𝐗"
+        
+      },
+      "ANTI_LINK": {
+        "description": "Bot delete or kick links sender from group, To Enable put true and to disable put false (e.g, true)",
+        "value":"false",
+        "required": false
+        
+      },
+      "ALWAYS_ONLINE": {
+        "description": "Keep your WhatsApp always online put true to activate (e.g, true)",
+        "value":"false",
+        "required": false
+        
+        
+      }
     }
-
-},
-
-     "buildpacks": [
-        {
-            "url": "https://github.com/heroku/heroku-buildpack-nodejs.git"
-        }
-     ],
-  "stack": "heroku-24"
+  
 }
