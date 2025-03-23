@@ -246,13 +246,23 @@ cmd({
     react: "🎶", 
     desc: "Download YouTube song", 
     category: "download", 
-    use: ".play <Yt URL>", 
+    use: ".play <Yt URL or Name>", 
     filename: __filename 
 }, async (conn, mek, m, { from, prefix, quoted, q, reply }) => { 
     try { 
-        if (!q) return await reply("*🔗 Please provide a YouTube URL.*");
+        if (!q) return await reply("*🔗 Please provide a YouTube URL or Song Name.*");
 
-        let apiUrl = `https://apis.giftedtech.web.id/api/download/dlmp3?apikey=gifted&url=${encodeURIComponent(q)}`;
+        let videoUrl = q;
+
+        // If the user provided a song name instead of a URL, perform a YouTube search
+        if (!q.includes("youtube.com") && !q.includes("youtu.be")) {
+            let yt = await ytsearch(q);
+            if (yt.results.length < 1) return reply("❌ No results found!");
+
+            videoUrl = yt.results[0].url; // Use the first search result
+        }
+
+        let apiUrl = `https://apis.giftedtech.web.id/api/download/dlmp3?apikey=gifted&url=${encodeURIComponent(videoUrl)}`;
         
         let response = await fetch(apiUrl);
         let data = await response.json();
@@ -271,7 +281,7 @@ cmd({
 ╔══════════════════❒
 ║ ⿻ *ᴛɪᴛʟᴇ:*  ${songData.title || "Unknown"}
 ║ ⿻ *ᴅᴜʀᴀᴛɪᴏɴ:*  ${songData.duration || "Unknown"}
-║ ⿻ *ʟɪɴᴋ:*  ${q}
+║ ⿻ *ʟɪɴᴋ:*  ${videoUrl}
 ╚══════════════════❒
 > *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ*`;
 
