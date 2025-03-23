@@ -197,7 +197,7 @@ let madeMenu = `*╭══〘〘 ${config.BOT_NAME} 〙〙*
 `
 
 await conn.sendMessage(from,{image:{url:config.ALIVE_IMG},caption:madeMenu,
-   contextInfo: getcontextInfo(m.sender)
+   contextInfo: getContextInfo(m.sender)
 , { quoted: mek });
 }catch(e){
 console.log(e)
