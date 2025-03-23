@@ -8,7 +8,7 @@ services:
     autoDeploy: true
     envVars:
       - key: SESSION_ID
-        value: "your-session-id"
+        value: "prince_md-7EllHZDa#BwR7vNRfsIxxVDlsCDcqq0IIs-X6bn9KLh16Q-3RULw"
       - key: MODE
         value: "private"
       - key: AUTO_READ_STATUS
