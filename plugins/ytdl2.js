@@ -300,3 +300,66 @@ cmd({
         reply("❌ An error occurred. Please try again later.");
     }
 });
+
+
+cmd({ 
+    pattern: "plaay", 
+    alias: ["yta", "mp3"], 
+    react: "🎶", 
+    desc: "Download YouTube song", 
+    category: "download", 
+    use: ".play <Song Name>", 
+    filename: __filename 
+}, async (conn, mek, m, { from, prefix, quoted, q, reply }) => { 
+    try { 
+        if (!q) return await reply("*🔗 Please provide a YouTube song name.*");
+
+        // Perform YouTube search using the song name
+        let yt = await ytsearch(q);
+        if (yt.results.length < 1) return reply("❌ No results found for the song name!");
+
+        let videoUrl = yt.results[0].url; // Use the first search result as the video URL
+
+        // Construct API URL using the video URL for the 'dlmp3' API
+        let apiUrl = `https://apis.giftedtech.web.id/api/download/dlmp3?apikey=gifted&url=${encodeURIComponent(videoUrl)}`;
+        
+        let response = await fetch(apiUrl);
+        let data = await response.json();
+
+        // Check if the response is valid and contains the necessary data
+        if (!data.success || !data.result || !data.result.download_url) {
+            return reply("❌ Failed to fetch the audio. Please try again later.");
+        }
+
+        let songData = data.result;
+
+        let ytmsg = `╔══〔 *PRINCE MDXI* 〕══❒
+║╭───────────────◆  
+║│ *❍ ᴏᴡɴʟᴏᴀᴅᴇʀ*
+║╰───────────────◆
+╚══════════════════❒
+╔══════════════════❒
+║ ⿻ *ᴛɪᴛʟᴇ:*  ${songData.title || "Unknown"}
+║ ⿻ *ǫᴜᴀʟɪᴛʏ:*  ${songData.quality || "128Kbps"}
+║ ⿻ *ʟɪɴᴋ:*  ${videoUrl}
+╚══════════════════❒
+> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ*`;
+
+        // Send song details (thumbnail, title, quality, etc.)
+        await conn.sendMessage(from, { 
+            image: { url: songData.thumbnail || "" }, 
+            caption: ytmsg, 
+            contextInfo: getContextInfo(m.sender) 
+        }, { quoted: mek });
+
+        // Send the audio file
+        await conn.sendMessage(from, { 
+            audio: { url: songData.download_url }, 
+            mimetype: "audio/mpeg" 
+        }, { quoted: mek });
+
+    } catch (e) {
+        console.log(e);
+        reply("❌ An error occurred. Please try again later.");
+    }
+});
