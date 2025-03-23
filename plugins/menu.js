@@ -1,4 +1,4 @@
-const {getContentInfo} = require('./new')
+const {getContextInfo} = require('./new')
 const config = require('../config')
 const {cmd , commands} = require('../command')
 const os = require("os")
