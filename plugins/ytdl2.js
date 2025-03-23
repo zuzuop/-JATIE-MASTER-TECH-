@@ -240,31 +240,36 @@ const yt = await ytsearch(q);
 
 
 cmd({ 
-    pattern: "playu", 
+    pattern: "playy", 
     alias: ["yta", "mp3"], 
     react: "🎶", 
     desc: "Download YouTube song", 
     category: "download", 
-    use: ".play <Yt URL>", 
+    use: ".play <YouTube URL or Song Name>", 
     filename: __filename 
 }, async (conn, mek, m, { from, prefix, quoted, q, reply }) => { 
     try { 
-        if (!q) return await reply("*🔗 Please provide a valid YouTube URL.*");
+        if (!q) return await reply("*🔗 Please provide a YouTube URL or Song Name.*");
 
         let videoUrl = q;
 
-        // Check if the URL is a valid YouTube URL
-        if (!videoUrl.includes("youtu.be") && !videoUrl.includes("youtube.com")) {
-            return await reply("❌ Invalid URL. Please provide a valid YouTube link.");
+        // If the user provides a song name (not a URL), perform a YouTube search
+        if (!q.includes("youtu.be") && !q.includes("youtube.com")) {
+            let yt = await ytsearch(q);
+            if (yt.results.length < 1) return reply("❌ No results found for the song name!");
+
+            videoUrl = yt.results[0].url; // Use the first search result as the video URL
         }
 
+        // Construct API URL using the video URL
         let apiUrl = `https://apis.giftedtech.web.id/api/download/ytmp3?apikey=gifted&url=${encodeURIComponent(videoUrl)}`;
         
         let response = await fetch(apiUrl);
         let data = await response.json();
 
+        // Check if the response is valid and contains the necessary data
         if (!data.success || !data.result || !data.result.download_url) {
-            return reply("❌ Failed to fetch the audio. Please check the URL and try again.");
+            return reply("❌ Failed to fetch the audio. Please check the URL or song name and try again.");
         }
 
         let songData = data.result;
@@ -273,22 +278,22 @@ cmd({
 ║╭───────────────◆  
 ║│ *❍ ᴏᴡɴʟᴏᴀᴅᴇʀ*
 ║╰───────────────◆
-╚══════════════════❒
-╔══════════════════❒
+╚════════════════❒
+╔═════════════════❒
 ║ ⿻ *ᴛɪᴛʟᴇ:*  ${songData.title || "Unknown"}
 ║ ⿻ *ǫᴜᴀʟɪᴛʏ:*  ${songData.quality || "128Kbps"}
 ║ ⿻ *ʟɪɴᴋ:*  ${videoUrl}
-╚══════════════════❒
+╚═════════════════❒
 > *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ*`;
 
-        // Send song details
+        // Send song details (thumbnail, title, quality, etc.)
         await conn.sendMessage(from, { 
             image: { url: songData.thumbnail || "" }, 
             caption: ytmsg, 
             contextInfo: getContextInfo(m.sender) 
         }, { quoted: mek });
 
-        // Send audio file
+        // Send the audio file
         await conn.sendMessage(from, { 
             audio: { url: songData.download_url }, 
             mimetype: "audio/mpeg" 
