@@ -245,21 +245,17 @@ cmd({
     react: "🎶", 
     desc: "Download YouTube song", 
     category: "download", 
-    use: ".play <YouTube URL or Song Name>", 
+    use: ".play <Song Name>", 
     filename: __filename 
 }, async (conn, mek, m, { from, prefix, quoted, q, reply }) => { 
     try { 
-        if (!q) return await reply("*🔗 Please provide a YouTube URL or Song Name.*");
+        if (!q) return await reply("*🔗 Please provide a YouTube song name.*");
 
-        let videoUrl = q;
+        // Perform YouTube search using the song name
+        let yt = await ytsearch(q);
+        if (yt.results.length < 1) return reply("❌ No results found for the song name!");
 
-        // If the user provides a song name (not a URL), perform a YouTube search
-        if (!q.includes("youtu.be") && !q.includes("youtube.com")) {
-            let yt = await ytsearch(q);
-            if (yt.results.length < 1) return reply("❌ No results found for the song name!");
-
-            videoUrl = yt.results[0].url; // Use the first search result as the video URL
-        }
+        let videoUrl = yt.results[0].url; // Use the first search result as the video URL
 
         // Construct API URL using the video URL
         let apiUrl = `https://apis.giftedtech.web.id/api/download/ytmp3?apikey=gifted&url=${encodeURIComponent(videoUrl)}`;
@@ -269,7 +265,7 @@ cmd({
 
         // Check if the response is valid and contains the necessary data
         if (!data.success || !data.result || !data.result.download_url) {
-            return reply("❌ Failed to fetch the audio. Please check the URL or song name and try again.");
+            return reply("❌ Failed to fetch the audio. Please try again later.");
         }
 
         let songData = data.result;
