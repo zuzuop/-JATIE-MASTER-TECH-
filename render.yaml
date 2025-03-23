@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: prince-mdxi-bot
+    name: PRINCE-MDXI
     env: node
     plan: free
     buildCommand: npm install
