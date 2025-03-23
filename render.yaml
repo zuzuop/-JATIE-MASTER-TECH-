@@ -22,4 +22,4 @@ services:
       - key: PREFIX
         value: "."
       - key: OMDB_API_KEY
-        value: "your-omdb-api-key"
+        value: "76cb7f39"
