@@ -41,7 +41,7 @@ Generate your session ID for deployment:
 -  [creat account](https://host.talkdrove.com/auth/signup?ref=74F6235511)
 
 
--  [deploy](https://host.talkdrove.com/auth/signup?ref=74F6235511)
+-  [deploy](https://host.talkdrove.com/share-bot/36)
 
   
 -  [Watch on YouTube](https://www.youtube.com/@princetech11)
