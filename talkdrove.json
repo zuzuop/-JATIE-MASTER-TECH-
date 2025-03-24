@@ -8,7 +8,7 @@
   
     "env": {
       "SESSION_ID": {
-        "description": "Put you your SESSION_ID here. Make sure it starts with prince-md-, or get session id from here, https://princeweb.onrender.com",
+        "description": "Put you your SESSION_ID here. Make sure it starts with prince-md-",
         "value":"",
         "required": true
         
