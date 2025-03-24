@@ -12,5 +12,5 @@ RUN npm install && npm install -g pm2 || yarn install --network-concurrency 1
 # Expose port
 EXPOSE 9090
 
-# Start the bot
-CMD ["npm", "start"]
+# Start the bot with node index.js
+CMD ["node", "index.js"]
