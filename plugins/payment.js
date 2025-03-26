@@ -19,7 +19,7 @@ async (conn, mek, m, { from }) => {
 ║💳 *Binance ID:* \`${binanceID}\`
 ║💵 *USD Address:* \`${usdAddress}\`
 ║🔗 *Send your payments securely!*
-╚══════════════════╝`;
+╚════════════════╝`;
 
     await conn.sendMessage(from, { image: { url: binanceImage }, caption }, { quoted: m });
   } catch (error) {
