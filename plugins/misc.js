@@ -14,7 +14,7 @@ cmd({
     filename: __filename
 },
 async (conn, mek, m, { from, reply, q, text, isCreator, fromMe }) => {
-    if (!isCreator) return reply('This command is only for the bot owner');
+    if (!isOwner) return reply('This command is only for the bot owner');
     try {
         const command = q?.toLowerCase();
 
