@@ -8,12 +8,13 @@ initializeAntiDeleteSettings();
 
 cmd({
     pattern: "antidelete",
+    react: "😎",
     alias: ['antidel', 'ad'],
     desc: "Sets up the Antidelete",
     category: "misc",
     filename: __filename
 },
-async (conn, mek, m, { from, reply, q, text, isCreator, fromMe }) => {
+async (conn, mek, m, { from, reply, isOwner, q, text, isCreator, fromMe }) => {
     if (!isOwner) return reply('This command is only for the bot owner');
     try {
         const command = q?.toLowerCase();
