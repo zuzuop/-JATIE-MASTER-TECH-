@@ -19,7 +19,8 @@ async (conn, mek, m, { from }) => {
 ║💳 *Binance ID:* \`${binanceID}\`
 ║💵 *USD Address:* \`${usdAddress}\`
 ║🔗 *Send your payments securely!*
-╚═══════════════╝`;
+╚═══════════════╝
+> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ `;
 
     await conn.sendMessage(from, { image: { url: binanceImage }, caption }, { quoted: m });
   } catch (error) {
@@ -45,13 +46,14 @@ async (conn, mek, m, { from, reply }) => {
     const accountName = "Juwon Mayowa";
     const bankName = "Opay";
 
-    const caption = `╔═✦『 *OPAY PAYMENT* 』✦═╗
+    const caption = `╔═✦『 *OPAY PAYMENT* 』✦╗
 ║🏦 *Bank Name:* \`${bankName}\`
 ║👤 *Account Name:* \`${accountName}\`
 ║💳 *Account Number:* \`${accountNumber}\`
 ║🔗 *Make payments securely!*
 ║🖼️ *screenshot needed*
-╚═════════════╝`;
+╚═══════════════╝
+> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ `;
 
     await conn.sendMessage(from, { image: { url: opayImage }, caption }, { quoted: mek });
   } catch (error) {
