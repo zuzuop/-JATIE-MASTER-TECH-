@@ -3,7 +3,7 @@ const axios = require("axios");
 
 
 cmd({
-  pattern: "vv",
+  pattern: "vvv",
   react: "📩",
   alias: ["videoview", "savevv"],
   desc: "Saves and resends quoted image or video with its caption.",
@@ -41,7 +41,7 @@ async (conn, mek, m, { from, quoted, reply }) => {
 
 
 cmd({
-  pattern: "ss",
+  pattern: "sss",
   react: "📸",
   alias: ["screenshot", "webshot"],
   desc: "Takes a screenshot of a website.",
