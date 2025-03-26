@@ -15,11 +15,11 @@ async (conn, mek, m, { from }) => {
     const binanceID = "926949781";
     const usdAddress = "TQgh6GRGZWp2uqKBd668sbPTCqe5uxYyxK";
 
-    const caption = `╔═✦『 *BINANCE PAYMENT* 』✦═╗
+    const caption = `╔✦『 *BINANCE PAYMENT* 』✦╗
 ║💳 *Binance ID:* \`${binanceID}\`
 ║💵 *USD Address:* \`${usdAddress}\`
 ║🔗 *Send your payments securely!*
-╚════════════════╝`;
+╚═══════════════╝`;
 
     await conn.sendMessage(from, { image: { url: binanceImage }, caption }, { quoted: m });
   } catch (error) {
