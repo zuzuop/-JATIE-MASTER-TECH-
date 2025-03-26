@@ -11,15 +11,15 @@ cmd({
 }, 
 async (conn, mek, m, { from }) => {
   try {
-    const binanceImage = "https://github.com/Mayelprince/url/blob/main/url/IMG-20250325-WA0057.jpg"; // Binance image URL
+    const binanceImage = "https://raw.githubusercontent.com/Mayelprince/url/main/url/IMG-20250325-WA0057.jpg"; // Binance image URL
     const binanceID = "926949781";
     const usdAddress = "TQgh6GRGZWp2uqKBd668sbPTCqe5uxYyxK";
 
-    const caption = `╔══✦『 *BINANCE PAYMENT* 』✦══╗
+    const caption = `╔═✦『 *BINANCE PAYMENT* 』✦═╗
 ║💳 *Binance ID:* \`${binanceID}\`
 ║💵 *USD Address:* \`${usdAddress}\`
 ║🔗 *Send your payments securely!*
-╚════════════════════╝`;
+╚══════════════════╝`;
 
     await conn.sendMessage(from, { image: { url: binanceImage }, caption }, { quoted: m });
   } catch (error) {
