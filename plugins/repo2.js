@@ -1,3 +1,4 @@
+const {getContextInfo} = require('./new')
 const { cmd } = require("../command");
 const axios = require("axios");
 
@@ -35,7 +36,8 @@ async (conn, mek, m, { from, reply, pushname }) => {
 
     await conn.sendMessage(from, { 
       image: { url: imageUrl }, 
-      caption: repoInfo 
+      caption: repoInfo, 
+      contextInfo: getContextInfo(m.sender)
     }, { quoted: mek });
 
   } catch (error) {
