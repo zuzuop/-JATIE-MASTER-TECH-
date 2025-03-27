@@ -2,7 +2,7 @@ const { cmd } = require("../command");
 const axios = require("axios");
 
 cmd({
-  pattern: "repo",
+  pattern: "repo2",
   react: "📌",
   alias: ["git", "github"],
   desc: "Displays the PRINCE MDXI repository details with live stars & forks.",
