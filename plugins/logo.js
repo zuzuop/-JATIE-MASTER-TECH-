@@ -2,7 +2,7 @@ const { cmd, commands } = require("../command"); const { fetchJson } = require("
 
 cmd({ pattern: "logo", desc: "Create logos", react: '🎗', category: "other", filename: __filename }, async (conn, message, store, { from, quoted, args, q, sender, reply }) => { try { if (!args[0]) return reply("Please give me a text.");
 
-let responseText = `*ᴘʀɪɴᴄᴇ ᴍᴅx ʟᴏɢᴏ ᴍᴀᴋᴇʀ*\n\n` +
+ let responseText = `*ᴘʀɪɴᴄᴇ ᴍᴅx ʟᴏɢᴏ ᴍᴀᴋᴇʀ*\n\n` +
   `*🔢 Reply with a number to choose a style ➠*\n\n` +
   `1 ➠ Black Pink\n2 ➠ Black Pink 2\n3 ➠ Silver 3D\n4 ➠ Naruto\n5 ➠ Digital Glitch\n` +
   `6 ➠ Pixel Glitch\n7 ➠ Comic Style\n8 ➠ Neon Light\n9 ➠ Free Bear\n10 ➠ Devil Wings\n\n` +
