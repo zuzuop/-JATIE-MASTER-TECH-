@@ -28,7 +28,7 @@ cmd({
 
     // Set a timeout to handle the 20-second response window
     const timeout = setTimeout(() => {
-      reply(`⏰ Time's up! The correct answer was: ${correctAnswer}`);
+      reply(`⏰ Time's up! The correct answer was: ${correctAnswer} \n> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ`);
     }, 20000);
 
     // Listen for the user's response
