@@ -5,7 +5,7 @@ const googleTTS = require('google-tts-api')
 
 
 cmd({
-    pattern: "trt",
+    pattern: "trt2",
     alias: ["translate"],
     desc: "🌍 Translate text between languages",
     react: "⚡",
