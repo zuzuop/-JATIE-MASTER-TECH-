@@ -6,25 +6,37 @@ const { igdl } = require("ruhend-scraper");
 const axios = require("axios");
 const { cmd, commands } = require('../command');
 
+
 cmd({
   pattern: "porn",
   alias: ["xvideos", "xporn"],
-  desc: "Search and download adult videos by name",
+  desc: "Search and download adult videos",
   category: "download",
   filename: __filename
-}, async (conn, m, store, { from, q, reply }) => {
+}, async (conn, m, store, { from, quoted, q, reply }) => {
   try {
-    if (!q) return reply("❌ Please provide a search keyword.\nExample: .porn mia khalifa");
+    if (!q) return reply("❌ Enter keywords to search. Example: .porn mai Khalifa");
 
     await conn.sendMessage(from, {
-      react: { text: '⏳', key: m.key }
+      react: { text: '🔍', key: m.key }
     });
 
-    const res = await fetch(`https://apis-keith.vercel.app/download/porn?query=${encodeURIComponent(q)}`);
-    const data = await res.json();
+    // Search for videos using Keith's API
+    const searchRes = await fetch(`https://apis-keith.vercel.app/search?query=${encodeURIComponent(q)}`);
+    const searchData = await searchRes.json();
+
+    if (!searchData.status || !searchData.result || !searchData.result[0]?.url) {
+      return reply("❌ No videos found.");
+    }
+
+    const videoUrl = searchData.result[0].url;
+
+    // Download the video using Keith’s API
+    const response = await fetch(`https://apis-keith.vercel.app/download/porn?url=${encodeURIComponent(videoUrl)}`);
+    const data = await response.json();
 
     if (!data.status || !data.result) {
-      return reply("❌ No result found for your search.");
+      return reply("⚠️ Failed to retrieve video.");
     }
 
     const { videoInfo, downloads } = data.result;
@@ -52,7 +64,7 @@ cmd({
 
     conn.ev.on("messages.upsert", async (msgData) => {
       const receivedMsg = msgData.messages[0];
-      if (!receivedMsg?.message) return;
+      if (!receivedMsg.message) return;
 
       const receivedText = receivedMsg.message.conversation || receivedMsg.message.extendedTextMessage?.text;
       const senderID = receivedMsg.key.remoteJid;
@@ -67,14 +79,14 @@ cmd({
           case "1":
             await conn.sendMessage(senderID, {
               video: { url: downloads.lowQuality },
-              caption: "📥 *Downloaded in Low Quality*"
+              caption: "📥 *Low Quality*"
             }, { quoted: receivedMsg });
             break;
 
           case "2":
             await conn.sendMessage(senderID, {
               video: { url: downloads.highQuality },
-              caption: "📥 *Downloaded in High Quality*"
+              caption: "📥 *High Quality*"
             }, { quoted: receivedMsg });
             break;
 
@@ -89,8 +101,7 @@ cmd({
             await conn.sendMessage(senderID, {
               document: { url: downloads.lowQuality },
               mimetype: "audio/mpeg",
-              fileName: "XVideos_Audio.mp3",
-              caption: "📥 *Audio Downloaded as Document*"
+              fileName: "porn-audio.mp3"
             }, { quoted: receivedMsg });
             break;
 
@@ -103,13 +114,13 @@ cmd({
             break;
 
           default:
-            reply("❌ Invalid option! Please reply with 1, 2, 3, 4, or 5.");
+            reply("❌ Invalid reply. Send 1, 2, 3, 4, or 5.");
         }
       }
     });
 
   } catch (error) {
-    console.error("Porn Search Error:", error);
-    reply("❌ An error occurred while processing your request.");
+    console.error("Porn CMD Error:", error);
+    reply("❌ Error occurred. Try again later.");
   }
 });
