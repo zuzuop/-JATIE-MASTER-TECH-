@@ -1,8 +1,8 @@
 
 const axios = require('axios');
-const config = require('../config')
-const { cmd, commands } = require('../command')
-const googleTTS = require('google-tts-api')
+const config = require('../config');
+const { cmd, commands } = require('../command');
+const googleTTS = require('google-tts-api');
 
 cmd({
     pattern: "trt2",
@@ -26,8 +26,8 @@ async (conn, mek, m, { from, quoted, sender, q, reply }) => {
         const targetLang = args[0].toLowerCase();
         const textToTranslate = m.quoted.text;
 
-        // Use "auto" to detect source language automatically
-        const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=auto|${targetLang}`;
+        // Default source language set to English
+        const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=en|${targetLang}`;
 
         const response = await axios.get(url);
         const translation = response.data.responseData.translatedText;
