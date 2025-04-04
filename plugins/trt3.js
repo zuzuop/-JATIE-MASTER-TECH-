@@ -1,9 +1,8 @@
-
 const translatte = require('translatte');
 const { cmd } = require('../command'); // Your bot command system
 
 cmd({
-  pattern: "trrt",
+  pattern: "trt",
   alias: ["translate"],
   desc: "🌐 Translate quoted message to a target language",
   react: "🌍",
