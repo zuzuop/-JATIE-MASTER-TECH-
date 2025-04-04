@@ -4,7 +4,8 @@ const translatte = require('translatte');
 
 cmd({
   pattern: "translate",
-  alias: ["trt2"],
+  alias: ["trtty"],
+  react: "🎨",
   desc: "Translate a quoted message to the specified language",
   category: "utility",
   filename: __filename
