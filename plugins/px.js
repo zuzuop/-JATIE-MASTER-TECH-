@@ -7,37 +7,36 @@ const axios = require("axios");
 const { cmd, commands } = require('../command');
 
 
-
 cmd({
   pattern: "porn",
   alias: ["xvideos", "xporn"],
-  desc: "Search and download adult videos from XVideos",
+  desc: "Search and download adult videos",
   category: "download",
   filename: __filename
 }, async (conn, m, store, { from, quoted, q, reply }) => {
   try {
-    if (!q) return reply("❌ Please enter a keyword. Example: .porn mia khalifa");
+    if (!q) return reply("❌ Enter keywords to search. Example: .porn fucking girls");
 
     await conn.sendMessage(from, {
       react: { text: '🔍', key: m.key }
     });
 
-    // Search for video by keyword
-    const searchRes = await fetch(`https://aemt.me/xvideo?query=${encodeURIComponent(q)}`);
+    // Alternative search
+    const searchRes = await fetch(`https://aemt.me/xnxxsearch?query=${encodeURIComponent(q)}`);
     const searchData = await searchRes.json();
 
-    if (!searchData.status || !searchData.result || !searchData.result[0]) {
-      return reply("❌ No videos found for that keyword.");
+    if (!searchData.status || !searchData.result || !searchData.result[0]?.url) {
+      return reply("❌ No videos found.");
     }
 
     const videoUrl = searchData.result[0].url;
 
-    // Download using Keith's API
+    // Download using Keith’s API
     const response = await fetch(`https://apis-keith.vercel.app/download/porn?url=${encodeURIComponent(videoUrl)}`);
     const data = await response.json();
 
     if (!data.status || !data.result) {
-      return reply("⚠️ Failed to retrieve video. Please try again.");
+      return reply("⚠️ Failed to retrieve video.");
     }
 
     const { videoInfo, downloads } = data.result;
@@ -80,14 +79,14 @@ cmd({
           case "1":
             await conn.sendMessage(senderID, {
               video: { url: downloads.lowQuality },
-              caption: "📥 *Downloaded in Low Quality*"
+              caption: "📥 *Low Quality*"
             }, { quoted: receivedMsg });
             break;
 
           case "2":
             await conn.sendMessage(senderID, {
               video: { url: downloads.highQuality },
-              caption: "📥 *Downloaded in High Quality*"
+              caption: "📥 *High Quality*"
             }, { quoted: receivedMsg });
             break;
 
@@ -102,8 +101,7 @@ cmd({
             await conn.sendMessage(senderID, {
               document: { url: downloads.lowQuality },
               mimetype: "audio/mpeg",
-              fileName: "XVideos_Audio.mp3",
-              caption: "📥 *Audio Downloaded as Document*"
+              fileName: "porn-audio.mp3"
             }, { quoted: receivedMsg });
             break;
 
@@ -116,13 +114,13 @@ cmd({
             break;
 
           default:
-            reply("❌ Invalid option! Please reply with 1, 2, 3, 4, or 5.");
+            reply("❌ Invalid reply. Send 1, 2, 3, 4, or 5.");
         }
       }
     });
 
   } catch (error) {
-    console.error("Error:", error);
-    reply("❌ An error occurred while processing your request. Please try again.");
+    console.error("Porn CMD Error:", error);
+    reply("❌ Error occurred. Try again later.");
   }
 });
