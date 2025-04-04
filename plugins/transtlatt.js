@@ -1,6 +1,8 @@
 const axios = require('axios');
-const config = require('../config');
-const { cmd, commands } = require('../command');
+const config = require('../config')
+const {cmd , commands} = require('../command')
+const googleTTS = require('google-tts-api')
+
 
 cmd({
     pattern: "trt",
@@ -12,45 +14,32 @@ cmd({
 },
 async (conn, mek, m, { from, quoted, sender, q, reply }) => {
     try {
-        const args = q.trim().split(' ');
-        if (!args[0]) {
-            return reply("❗ Please provide a target language code.\nExample: .translate en");
-        }
+        const args = q.split(' ');
+        if (!args) return reply("❗ Please provide a language code and text. Usage: .translate [language ]\nEg: trt fr");
+         if (!m.quoted) return reply("❗ Please reply to the message you want to translate . Usage: .translate [language ]\nEg: trt fr");
 
-        if (!m.quoted || !m.quoted.text) {
-            return reply("❗ Please reply to the message you want to translate.\nExample: .translate fr");
-        }
+        const targetLang = args[0];
+        const textToTranslate = m.quoted.text
 
-        const targetLang = args[0].toLowerCase();
-        const textToTranslate = m.quoted.text;
+        const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=en|${targetLang}`;
 
-        // Step 1: Try detecting language with dummy langpair
-        const detectUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=en|${targetLang}`;
-        const detectRes = await axios.get(detectUrl);
-
-        // Step 2: Get detected language code from response
-        const detectedLang = detectRes.data?.responseData?.match?.lang || detectRes.data?.matches?.[0]?.segment?.lang || 'en';
-
-        // Step 3: Use the actual detected language
-        const translateUrl = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=${detectedLang}|${targetLang}`;
-        const finalRes = await axios.get(translateUrl);
-
-        const translation = finalRes.data?.responseData?.translatedText;
+        const response = await axios.get(url);
+        const translation = response.data.responseData.translatedText;
 
         const translationMessage = `
-*PRINCE MDXI TRANSLATION* 
+🌍 *PRINCE MDXI TRANSLATION* 🌍
 
 🔤 *Original*: ${textToTranslate}
 
 🔠 *Translated*: ${translation}
 
-🌐 *From*: ${detectedLang.toUpperCase()} ➜ *To*: ${targetLang.toUpperCase()}
+🌐 *Language*: ${targetLang.toUpperCase()}
 
-> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ`;
+> ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ `;
 
         return reply(translationMessage);
     } catch (e) {
-        console.log("Translation error:", e);
-        return reply("⚠️ Failed to translate. Please check the language code and try again.");
+        console.log(e);
+        return reply("⚠️ An error occurred data while translating the your text. Please try again later🤕");
     }
 });
