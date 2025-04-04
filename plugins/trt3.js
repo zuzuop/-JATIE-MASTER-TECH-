@@ -20,13 +20,11 @@ async (conn, mek, m, { from, quoted, q, reply }) => {
 
     const targetLang = args[0].toLowerCase(); // Extract language code
 
-    // Get text from quoted message (if any) or user input
-    let textToTranslate;
-    if (quoted && quoted.text) {
-      textToTranslate = quoted.text; // Use quoted message text
-    } else if (args.length > 1) {
-      textToTranslate = args.slice(1).join(" "); // Use manually entered text
-    } else {
+    // Extract text from quoted message if available
+    let textToTranslate = quoted?.text || (args.length > 1 ? args.slice(1).join(" ") : null);
+    
+    // If no text found, prompt user
+    if (!textToTranslate) {
       return await conn.sendMessage(from, { text: "❗ Reply to a message or enter text to translate." }, { quoted: m });
     }
 
