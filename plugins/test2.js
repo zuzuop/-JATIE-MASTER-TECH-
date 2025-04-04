@@ -27,7 +27,7 @@ async (conn, mek, m, { from, quoted, sender, q, reply }) => {
         const textToTranslate = m.quoted.text;
 
         // Default source language set to English
-        const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=en|${targetLang}`;
+        const url = `https://api.mymemory.translated.net/get?q=${encodeURIComponent(textToTranslate)}&langpair=no|${targetLang}`;
 
         const response = await axios.get(url);
         const translation = response.data.responseData.translatedText;
