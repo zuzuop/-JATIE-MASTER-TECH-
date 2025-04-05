@@ -13,7 +13,7 @@ cmd({
   category: "convert",
   use: ".tourl [reply to media]",
   filename: __filename
-}, async (client, message, args, { reply }) => {
+}, async (conn, mek, m, { from, q, sender, reply }) => {
   try {
     // Validate if the user replied to media
     const quotedMsg = message.quoted ? message.quoted : message;
