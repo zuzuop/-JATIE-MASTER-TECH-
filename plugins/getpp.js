@@ -10,9 +10,11 @@ cmd({
   filename: __filename
 }, async (conn, m, store, { from, quoted, reply, sender }) => {
   try {
+    // If the message is a reply
     const targetMsg = quoted || m;
-    const userNumber = targetMsg.key.participant; // Get the number of the person whose profile picture is requested
-    
+    const userNumber = targetMsg.key.participant || targetMsg.key.remoteJid;  // Get the sender's number
+
+    // Handle the case where no participant/remoteJid is found
     if (!userNumber) {
       return reply("❌ Could not find the user in the reply.");
     }
