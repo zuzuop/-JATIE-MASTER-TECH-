@@ -2,7 +2,7 @@ const { fetchJson } = require("../lib/functions");
 const axios = require("axios");
 const { cmd, commands } = require('../command');
 
-// Sinhala Movie Download
+// Sinhala Movie Download (sent as document)
 cmd({
   pattern: "movie",
   alias: ["slmovie"],
@@ -33,24 +33,20 @@ cmd({
 
     const { downloadLink, fullUrl } = res.data;
 
-    const caption = `╭══ 🎥 *Movie Download* ══╮\n`
-      + `┃\n┃ 🎬 *Link:* ${fullUrl}\n`
-      + `┃ 📥 *Download:* ${downloadLink}\n`
-      + `┃\n╰═════════════════❐`;
-
     await conn.sendMessage(from, {
-      text: caption
+      text: `📽️ Fetching your movie...\n\n🔗 ${downloadLink}`
     }, { quoted: m });
 
+    // Send the video as a document
     await conn.sendMessage(from, {
       document: { url: downloadLink },
       mimetype: "video/mp4",
       fileName: "Sinhala_Movie.mp4",
-      caption: "📽️ Movie Downloaded Successfully!"
+      caption: "✅ Here is your Sinhala movie in document format!"
     }, { quoted: m });
 
   } catch (e) {
     console.error("Movie Download Error:", e);
-    reply("❌ Something went wrong while processing your movie request.");
+    reply("⚠️ Something went wrong while processing your movie request.");
   }
 });
