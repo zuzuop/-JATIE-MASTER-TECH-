@@ -107,13 +107,13 @@
     "OWNER_NUMBER": {
       "description": "put the owner number for bot.",
       "value": "237677224245"
-      "required": true
+      "required": "true"
       
    },
     "OWNER_NAME": {
       "description": "Enter your name here",
-      "value": "",
-      "required": true
+      "value": "PRINCE",
+      "required": "true"
     }
 
 },
