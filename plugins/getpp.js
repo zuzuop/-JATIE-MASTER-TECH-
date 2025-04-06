@@ -8,11 +8,11 @@ cmd({
   category: "utility",
   use: ".getpp [reply to someone’s message]",
   filename: __filename
-}, async (conn, m, store, { from, quoted, reply, sender }) => {
+}, async (conn, m, participants, store, { from, quoted, reply, sender }) => {
   try {
     // If the message is a reply
     const targetMsg = quoted || m;
-    const userNumber = targetMsg.key.participant || targetMsg.key.remoteJid;  // Get the sender's number
+    const userNumber = targetMsg.key.participants || targetMsg.key.remoteJid;  // Get the sender's number
 
     // Handle the case where no participant/remoteJid is found
     if (!userNumber) {
