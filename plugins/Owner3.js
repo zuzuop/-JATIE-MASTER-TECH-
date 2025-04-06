@@ -26,3 +26,15 @@ async (conn, mek, m, { from }) => {
                 contacts: [{ vcard }]
             }
         });
+
+        // Send the owner contact message with image
+        await conn.sendMessage(from, {
+            image: { url: 'https://files.catbox.moe/v1rf80.jpg' }, // Image URL
+            caption: `Here's the owner's contact.`
+        }, { quoted: mek });
+
+    } catch (error) {
+        console.error(error);
+        reply(`An error occurred: ${error.message}`);
+    }
+});
