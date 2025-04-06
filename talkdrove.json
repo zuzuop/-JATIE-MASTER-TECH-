@@ -17,16 +17,6 @@
       "value": ".",
       "required": true
     },
-    "OWNER_NUMBER": {
-      "description": "put the owner number for bot.",
-      "value": "237677224245",
-      "required": true
-   },
-    "OWNER_NAME": {
-      "description": "Enter your name here",
-      "value": "PRINCE",
-      "required": true
-    },
     "MODE": {
       "description": "Bot mode can be public, private, inbox, or groups (in lowercase) (e.g., public)",
       "value": "private",
