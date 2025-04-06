@@ -45,13 +45,14 @@ cmd({
 
 cmd({
     pattern: "playdoc2",
-    desc: "To download song as document.",
+    desc: "To download song as document with info preview.",
     react: "📄",
     category: "download",
     filename: __filename
 }, async (conn, mek, m, { from, q, reply, pushname }) => {
     try {
         if (!q) return reply("Please give me a url or title");
+
         const search = await yts(q);
         const data = search.videos[0];
         const url = data.url;
@@ -75,11 +76,18 @@ cmd({
 > *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ*
 `;
 
+        // 1. Send music preview with thumbnail
+        await conn.sendMessage(from, {
+            image: { url: data.thumbnail },
+            caption: caption
+        }, { quoted: mek });
+
+        // 2. Send audio file as document with the same caption
         await conn.sendMessage(from, {
             document: { url: audio },
             mimetype: "audio/mpeg",
-            fileName: data.title + ".mp3",
-            caption: caption
+            fileName: `${data.title}.mp3`,
+            caption: " ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ "
         }, { quoted: mek });
 
     } catch (e) {
