@@ -4,7 +4,7 @@ const os = require("os");
 const path = require("path");
 const { cmd } = require("../command");
 
-// All your provided ImgBB API keys
+// List of ImgBB API Keys
 const API_KEYS = [
   "40dfb24c7b48ba51487a9645abf33148",
   "4a9c3527b0cd8b12dd4d8ab166a0f592",
@@ -13,63 +13,80 @@ const API_KEYS = [
 ];
 
 cmd({
-  pattern: "tourl",
-  alias: ["imgtourl", "img2url", "url"],
-  react: "🖇",
-  desc: "Convert an image to a URL using ImgBB.",
-  category: "convert",
-  use: ".tourl (Reply to an image)",
+  pattern: "tourl2",
+  alias: ["imgtourl2", "imgurl2", "url", "geturl2", "upload"],
+  react: "📤",
+  desc: "Convert media to ImgBB URL",
+  category: "utility",
+  use: ".tourl2 [reply to media]",
   filename: __filename
-}, async (conn, m, store, { from, quoted, reply, sender }) => {
+}, async (client, message, args, { reply }) => {
   try {
-    const targetMsg = quoted ? quoted : m;
-    const mimeType = (targetMsg.msg || targetMsg).mimetype || "";
+    const quotedMsg = message.quoted ? message.quoted : message;
+    const mimeType = (quotedMsg.msg || quotedMsg).mimetype || "";
 
-    if (!mimeType || !mimeType.startsWith("image")) {
-      return reply("❌ Please reply to an image.");
+    if (!mimeType || !/image|video|audio/.test(mimeType)) {
+      throw "Please reply to an image, video, or audio file.";
     }
 
-    reply("🔄 Uploading image...");
+    // Download media
+    const mediaBuffer = await quotedMsg.download();
 
-    const imageBuffer = await targetMsg.download();
-    const base64Image = imageBuffer.toString("base64");
+    // Convert to base64 (with mime type prefix)
+    const base64Image = mediaBuffer.toString("base64");
+    const fullData = `data:${mimeType};base64,${base64Image}`;
 
-    let uploaded = false;
-    let imageUrl = "";
-
+    // Try all API keys
+    let uploadedUrl;
     for (let key of API_KEYS) {
       try {
-        const res = await axios.post(`https://api.imgbb.com/1/upload`, null, {
+        const res = await axios.post("https://api.imgbb.com/1/upload", null, {
           params: {
             key,
-            image: base64Image,
-            name: `upload_${Date.now()}`
+            image: fullData
           }
         });
 
         if (res.data && res.data.data && res.data.data.url) {
-          imageUrl = res.data.data.url;
-          uploaded = true;
+          uploadedUrl = res.data.data.url;
           break;
+        } else {
+          console.log(`Key failed: ${key} - Invalid response`);
         }
       } catch (err) {
-        console.log(`Key failed: ${key} - Trying next...`);
+        console.log(`Key failed: ${key} -`, err.response?.data || err.message);
       }
     }
 
-    if (!uploaded) {
-      return reply("❌ All API keys failed. Please try again later.");
+    if (!uploadedUrl) {
+      throw "❌ All API keys failed. Please try again later.";
     }
 
-    await conn.sendMessage(from, {
-      text: `✅ *Image Uploaded Successfully!*\n\n🔗 *URL:* ${imageUrl}`,
-      contextInfo: {
-        mentionedJid: [sender]
-      }
-    });
+    // Detect media type
+    let mediaType = "File";
+    if (mimeType.includes("image")) mediaType = "Image";
+    else if (mimeType.includes("video")) mediaType = "Video";
+    else if (mimeType.includes("audio")) mediaType = "Audio";
+
+    // Send result
+    await reply(
+      `*${mediaType}* Uploaded Successfully ✅\n\n` +
+      `*📁 Size:* ${formatBytes(mediaBuffer.length)}\n` +
+      `*🔗 URL:* ${uploadedUrl}\n\n` +
+      `> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ`
+    );
 
   } catch (error) {
-    console.error("Upload Error:", error?.response?.data || error);
-    reply("❌ Error: Failed to upload image.");
+    console.error(error);
+    await reply(`Error: ${error.message || error}`);
   }
 });
+
+// Format file size helper
+function formatBytes(bytes) {
+  if (bytes === 0) return "0 Bytes";
+  const k = 1024;
+  const sizes = ["Bytes", "KB", "MB", "GB"];
+  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + " " + sizes[i];
+}
