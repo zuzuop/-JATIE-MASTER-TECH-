@@ -1,88 +1,85 @@
 const axios = require("axios");
+const FormData = require("form-data");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
 const { cmd } = require("../command");
 
-// List of ImgBB API Keys
-const API_KEYS = [
-  "40dfb24c7b48ba51487a9645abf33148",
-  "4a9c3527b0cd8b12dd4d8ab166a0f592",
-  "0e2b3697320c339de00589478be70c48",
-  "7b46d3cddc9b67ef690ed03dce9cb7d5"
-];
-
 cmd({
   pattern: "tourl2",
   alias: ["imgtourl2", "imgurl2", "url", "geturl2", "upload"],
   react: "📤",
-  desc: "Convert media to ImgBB URL",
+  desc: "Convert media to Catbox URL",
   category: "utility",
   use: ".tourl2 [reply to media]",
   filename: __filename
-}, async (client, message, args, { reply }) => {
+}, async (conn, m, store, { from, quoted, reply, sender }) => {
   try {
-    const quotedMsg = message.quoted ? message.quoted : message;
-    const mimeType = (quotedMsg.msg || quotedMsg).mimetype || "";
+    const targetMsg = quoted || m;
+    const mimeType = (targetMsg.msg || targetMsg).mimetype || "";
 
-    if (!mimeType || !/image|video|audio/.test(mimeType)) {
-      throw "Please reply to an image, video, or audio file.";
+    if (!mimeType) {
+      return reply("❌ Please reply to an image, video, or audio.");
     }
 
-    // Download media
-    const mediaBuffer = await quotedMsg.download();
+    reply("🔄 Uploading to Catbox...");
 
-    // Convert to base64 (with mime type prefix)
-    const base64Image = mediaBuffer.toString("base64");
-    const fullData = `data:${mimeType};base64,${base64Image}`;
+    const mediaBuffer = await targetMsg.download();
+    const tempPath = path.join(os.tmpdir(), `upload_${Date.now()}`);
 
-    // Try all API keys
-    let uploadedUrl;
-    for (let key of API_KEYS) {
-      try {
-        const res = await axios.post("https://api.imgbb.com/1/upload", null, {
-          params: {
-            key,
-            image: fullData
-          }
-        });
+    fs.writeFileSync(tempPath, mediaBuffer);
 
-        if (res.data && res.data.data && res.data.data.url) {
-          uploadedUrl = res.data.data.url;
-          break;
-        } else {
-          console.log(`Key failed: ${key} - Invalid response`);
-        }
-      } catch (err) {
-        console.log(`Key failed: ${key} -`, err.response?.data || err.message);
-      }
+    let ext = "";
+    if (mimeType.includes("image/jpeg")) ext = ".jpg";
+    else if (mimeType.includes("image/png")) ext = ".png";
+    else if (mimeType.includes("video")) ext = ".mp4";
+    else if (mimeType.includes("audio")) ext = ".mp3";
+
+    const fileName = "file" + ext;
+    const form = new FormData();
+    form.append("fileToUpload", fs.createReadStream(tempPath), fileName);
+    form.append("reqtype", "fileupload");
+
+    const response = await axios.post("https://catbox.moe/user/api.php", form, {
+      headers: form.getHeaders()
+    });
+
+    fs.unlinkSync(tempPath);
+
+    if (!response.data) {
+      throw new Error("❌ Upload failed.");
     }
 
-    if (!uploadedUrl) {
-      throw "❌ All API keys failed. Please try again later.";
-    }
-
-    // Detect media type
     let mediaType = "File";
     if (mimeType.includes("image")) mediaType = "Image";
     else if (mimeType.includes("video")) mediaType = "Video";
     else if (mimeType.includes("audio")) mediaType = "Audio";
 
-    // Send result
-    await reply(
-      `*${mediaType}* Uploaded Successfully ✅\n\n` +
-      `*📁 Size:* ${formatBytes(mediaBuffer.length)}\n` +
-      `*🔗 URL:* ${uploadedUrl}\n\n` +
-      `> © ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ`
-    );
+    await conn.sendMessage(from, {
+      text:
+        `✅ *${mediaType} Uploaded Successfully!*\n` +
+        `📦 *Size:* ${formatBytes(mediaBuffer.length)}\n` +
+        `🔗 *URL:* ${response.data}\n\n` +
+        `> ⚙️ *Powered by PRINCE TECH*`,
+      contextInfo: {
+        mentionedJid: [sender],
+        forwardingScore: 999,
+        isForwarded: true,
+        forwardedNewsletterMessageInfo: {
+          newsletterJid: "120363306168354073@newsletter",
+          newsletterName: "ᴍᴀʟᴠɪɴ ᴋɪɴɢ",
+          serverMessageId: 143
+        }
+      }
+    });
 
   } catch (error) {
     console.error(error);
-    await reply(`Error: ${error.message || error}`);
+    await reply("❌ Error: " + (error.message || error));
   }
 });
 
-// Format file size helper
+// Byte size formatter
 function formatBytes(bytes) {
   if (bytes === 0) return "0 Bytes";
   const k = 1024;
