@@ -1,5 +1,4 @@
 const axios = require("axios");
-const FormData = require("form-data");
 const fs = require("fs");
 const os = require("os");
 const path = require("path");
@@ -15,7 +14,7 @@ cmd({
   filename: __filename
 }, async (conn, m, store, { from, quoted, reply, sender }) => {
   try {
-    const targetMsg = quoted ? quoted : m;
+    const targetMsg = quoted || m;
     const mimeType = (targetMsg.msg || targetMsg).mimetype || "";
 
     if (!mimeType || !mimeType.startsWith("image")) {
@@ -25,41 +24,32 @@ cmd({
     reply("🔄 Uploading image...");
 
     const imageBuffer = await targetMsg.download();
-    const tempFilePath = path.join(os.tmpdir(), "temp_image.jpg");
-    fs.writeFileSync(tempFilePath, imageBuffer);
 
-    const formData = new FormData();
-    formData.append("image", fs.createReadStream(tempFilePath));
+    // Convert to base64
+    const base64Image = imageBuffer.toString("base64");
 
-    const { data } = await axios.post("https://api.imgbb.com/1/upload?key=e909ac2cc8d50250c08f176afef0e333", formData, {
-      headers: formData.getHeaders(),
+    const { data } = await axios.post(`https://api.imgbb.com/1/upload?key=e909ac2cc8d50250c08f176afef0e333`, null, {
+      params: {
+        image: base64Image,
+        name: `upload_${Date.now()}`
+      }
     });
 
-    fs.unlinkSync(tempFilePath); // Delete temp file
-
     if (!data || !data.data || !data.data.url) {
-      throw "❌ Failed to upload the image.";
+      return reply("❌ Failed to upload the image.");
     }
 
     const imageUrl = data.data.url;
-    const msgContext = {
-      mentionedJid: [sender],
-      forwardingScore: 999,
-      isForwarded: true,
-      forwardedNewsletterMessageInfo: {
-        newsletterJid: "120363306168354073@newsletter",
-        newsletterName: "ᴍᴀʟᴠɪɴ ᴋɪɴɢ",
-        serverMessageId: 143
-      }
-    };
 
     await conn.sendMessage(from, {
-      text: `✅ *Image Uploaded Successfully 📸*\n📏 *Size:* ${imageBuffer.length} Bytes\n🔗 *URL:* ${imageUrl}\n\n> ⚖️ *Uploaded via MALVIN-AI*`,
-      contextInfo: msgContext
+      text: `✅ *Image Uploaded Successfully 📸*\n🔗 *URL:* ${imageUrl}\n\n> ⚖️ *Uploaded via MALVIN-AI*`,
+      contextInfo: {
+        mentionedJid: [sender]
+      }
     });
 
   } catch (error) {
-    reply("❌ Error: " + error.message);
-    console.error("Upload Error:", error);
+    console.error("Upload Error:", error?.response?.data || error);
+    reply("❌ Error: Failed to upload image. Check your API key or try again later.");
   }
 });
