@@ -10,7 +10,7 @@ function replaceYouTubeID(url) {
 }
 
 cmd({
-    pattern: "play3",
+    pattern: "pplay3",
     alias: ["ytmp33", "ytmp3dl3"],
     react: "🎵",
     desc: "Download Ytmp3",
