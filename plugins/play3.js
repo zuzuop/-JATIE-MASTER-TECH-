@@ -43,8 +43,8 @@ cmd({
             `🖇 *Url:* ${url || "Unknown"}\n\n` +
             `🔽 *Reply with your choice:*\n` +
             `1.1 *Audio Type* 🎵\n` +
-            `1.2 *Document Type* 📁\n\n` +
-            `${config.FOOTER || "𓆩𝑨𝑾𝑨𝑰𝑺𝑿𝑫𓆪"}`;
+            `1.2 *Document Type* 📁\n\n` ;
+            
 
         const sentMsg = await conn.sendMessage(from, { image: { url: image }, caption: info }, { quoted: mek });
         const messageID = sentMsg.key.id;
