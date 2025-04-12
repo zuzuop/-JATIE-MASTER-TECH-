@@ -25,7 +25,7 @@ async (conn, mek, m, { from, prefix, quoted, q, reply }) => {
 
         // Fetch pairing code
         //const fetch = require("node-fetch");
-        const response = await fetch(`https://prince-mdx-session2.onrender.com/pair?phone=${encodeURIComponent(q)}`);
+        const response = await fetch(`https://prince-mdx-session2.onrender.com/pair?number=${q}`);
         const pair = await response.json();
 
         // Check for errors in response
