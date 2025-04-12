@@ -17,8 +17,18 @@
       "value": ".",
       "required": true
     },
+"OWNER_NAME": {
+      "description": "Type Bot Owner Name.",
+      "required": false,
+      "value": "ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ"
+}, 
+    "OWNER_NUMBER": {
+      "description": "put the owner number for bot.",
+      "required": false,
+      "value": "237677224245"
+    }, 
     "MODE": {
-      "description": "Bot mode can be public, private, inbox, or groups (in lowercase) (e.g., public)",
+      "description": "Bot mode can be public or private,  (in lowercase) (e.g., public)",
       "value": "private",
       "required": true
     }
