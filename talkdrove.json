@@ -18,12 +18,12 @@
       "required": true
     },
 "OWNER_NAME": {
-      "description": "Type Bot Owner Name.",
+      "description": "Type Bot Owner Name( your name).",
       "required": false,
       "value": "ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ"
 }, 
     "OWNER_NUMBER": {
-      "description": "put the owner number for bot.",
+      "description": "put the owner number for bot(you number eg 237677224245).",
       "required": false,
       "value": "237677224245"
     }, 
