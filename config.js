@@ -37,8 +37,8 @@ ALIVE_IMG: process.env.ALIVE_IMG || "https://files.catbox.moe/kzfne8.jpeg",
 // add img for alive msg
 MENU_IMG: process.env.MENU_IMG || "https://raw.githubusercontent.com/Mayelprince/url/main/url/1264.jpg",
 // menu image 
-LIVE_MSG: process.env.LIVE_MSG || "> ᴀᴄᴛɪᴠᴇ ᴀɴᴅ ʀᴇᴀᴅʏ ᴛᴏ ɢᴏ",
-// add alive msg here 
+WELCOME_ENABLED: process.env.WELCOME_ENABLED || "true",
+    // welcome group members 
 READ_MESSAGE: process.env.READ_MESSAGE || "false",
 // Turn true or false for automatic read msgs
 AUTO_REACT: process.env.AUTO_REACT || "false",
