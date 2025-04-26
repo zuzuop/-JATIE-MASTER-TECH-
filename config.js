@@ -25,8 +25,6 @@ CUSTOM_REACT: process.env.CUSTOM_REACT || "false",
 // make this true for custum emoji react    
 CUSTOM_REACT_EMOJIS: process.env.CUSTOM_REACT_EMOJIS || "💝,💖,💗,❤️‍🩹,❤️,🧡,💛,💚,💙,💜,🤎,🖤,🤍",
 // chose custom react emojis by yourself 
-DELETE_LINKS: process.env.DELETE_LINKS || "false",
-// automatic delete links witho remove member 
 OWNER_NUMBER: process.env.OWNER_NUMBER || "237677224245",
 // add your bot owner number
 OWNER_NAME: process.env.OWNER_NAME || "ᴘʀɪɴᴄᴇ ᴛᴇᴄʜ",
@@ -37,6 +35,10 @@ ALIVE_IMG: process.env.ALIVE_IMG || "https://files.catbox.moe/kzfne8.jpeg",
 // add img for alive msg
 MENU_IMG: process.env.MENU_IMG || "https://raw.githubusercontent.com/Mayelprince/url/main/url/1264.jpg",
 // menu image 
+MENU3_IMG: process.env.MENU_IMG || "",
+// menu image 
+RUNTIME_IMG: process.env.RUNTIME_IMG || "",
+// runtime image 
 WELCOME_ENABLED: process.env.WELCOME_ENABLED || "true",
     // welcome group members 
 READ_MESSAGE: process.env.READ_MESSAGE || "false",
