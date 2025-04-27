@@ -1,62 +1,155 @@
+<img src="https://capsule-render.vercel.app/api?type=waving&color=0:87CEEB,100:87CEEB&height=180&section=header&text=PRINCE%20MDXI%20WHATSAPP%20BOT&fontSize=38&fontColor=ffffff&fontFamily=Roboto&animation=twinkling" width="100%"/>
 
-# PRINCE-MDXI WhatsApp Bot 🌝💚
 
-![Bot Image](https://files.catbox.moe/kzfne8.jpeg)
 
-**Simple and Best WhatsApp Bot Created by [PRINCE MAYEL](https://github.com/mayelprince)**
+  <p align="center">
+<a href="https://github.com/Mayelprince/followers"><img title="Followers" src="https://img.shields.io/github/followers/itx-alii-raza?color=blue&style=flat-square"></a>
+<a href="https://github.com/Mayelprince/PRINCE-MDXI/stargazers/"><img title="Stars" src="https://img.shields.io/github/stars/Mayelprince/PRINCE-MDXI?color=blue&style=flat-square"></a>
+<a href="https://github.com/Mayelprince/PRINCE-MDXI/network/members"><img title="Forks" src="https://img.shields.io/github/forks/Mayelprince/PRINCE-MDXI?color=blue&style=flat-square"></a>
+<a href="https://github.com/Mayelprince/PRINCE-MDXI/"><img title="Size" src="https://img.shields.io/github/repo-size/Mayelprince/PRINCE-MDXI?style=flat-square&color=green"></a>
+<a href="https://github.com/Mayelprince/PRINCE-MDXI/graphs/commit-activity"><img height="20" src="https://img.shields.io/badge/Maintained%3F-yes-green.svg"></a>&nbsp;&nbsp;
+</p>
+<p align='center'>
+</p>
 
-## 🔗 Repository
+> **CURRENT BOT VERSION ➜ `2.0.0 ⚡`**
+---
 
-[![Fork the Repo](https://img.shields.io/badge/Fork%20Repo-blue?style=for-the-badge)](https://github.com/mayelprince/PRINCE-MDXI/fork)
+```
+DONT FORGET TO FORK 🍴 & STAR 🌟 REPO😇
+```
+---
 
-## 🔑 Get Session ID
-
-Generate your session ID for deployment:
-
-[![Get Pair Code](https://img.shields.io/badge/%F0%9F%9A%80%20GET%20PAIR%20CODE%20WEB-ffcc00?style=for-the-badge)](https://princeweb.onrender.com)
-
-## ⚙️ Setup Guide
-
-1. **Fork and star the repository.**
-2. **Generate your session ID** and copy it.
-3. **Edit the `config.js` file** and paste the session ID.
-
-## 🚀 Deployment Options
-
-- [![Deploy on Heroku](https://www.herokucdn.com/deploy/button.svg)](https://deployment-h4bs.onrender.com)  
-  [Create a Heroku Account](https://signup.heroku.com/) if you don't have one.
+<a href="https://git.io/typing-svg"><img src="https://readme-typing-svg.demolab.com?font=Black+Ops+One&size=50&pause=1000&color=1BAFBAFF&center=true&width=810&height=100&lines=+THANKS FOR CHOOSING+PRINCE-MDXI;MULTI+DEVICE+WHATSAPP+BOT;CREATED+BY+PRINCE+TECH" alt="Typing SVG" /></a>
+  </p>
   
-  **📺 Heroku Deployment Tutorial:**  
-  [Watch on YouTube](https://www.youtube.com/@princetech11)
+--- 
 
-- [![Deploy on Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/mayelprince/PRINCE-MDXI.git)
+<a><img src='https://files.catbox.moe/upmwpw.jpg'/></a>
+
+<a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
+
+***
+
+
+
+
+### 1. 𐃁FORK THIS REPOSITORY𐃁
+
+`FORK 🍴 AND STAR ⭐ IF YOU LIKE THIS BOT`
+
+  <a href="https://github.com/Mayelprince/PRINCE-MDXI/fork"><img title="PRINCE-MDXI" src="https://img.shields.io/badge/FORK-PRINCE%20MD-BOTh?color=indigo&style=for-the-badge&logo=stackshare"></a>
   
-  **📺 Render Deployment Tutorial:**  (not avialable)
+### 2. 𐃁GET SESSION ID𐃁 
+
+`IF YOU DON'T HAVE YOUR SESSION_ID SO U CAN GET IT CLICK ON SESSION_ID BUTTON AND PASTE YOUR NUMBER With COUNTRY CODE EXAMPLE:23769xxxxxx THEN YOU CAN GET YOUR SESSION_ID ✠`
+
+
+> **1. PAIR CODE SESSION ID**
+
+<a href='https://princeweb.onrender.com/' target="_blank">
+  <img alt='Pairing Code' src='https://img.shields.io/badge/Get%20Pairing%20Code-orange?style=for-the-badge&logo=opencv&logoColor=black'/>
+</a>
+<br> 
+
+> **2. PAIR CODE SESSION ID**
+
+<a href='https://princeweb.onrender.com' target="_blank">
+  <img alt='Pairing Code' src='https://img.shields.io/badge/Get%20Pairing%20Code-darkpink?style=for-the-badge&logo=opencv&logoColor=black'/>
+</a>
+<br> 
+
+
+
+---
+
+### <h2 align="">𐃁PRINCE-MDXI DEPLOYMENT OPTIONS𐃁</h2>
+
+---
+
+### <h4 align="">1. HEROKU</h4>
+<p style="text-align: center; font-size: 1.2em;">
+
+
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://deployment-h4bs.onrender.com)
+<a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
+
+### <h4 align="">3. KOYEB</h4>
+<p style="text-align: center; font-size: 1.2em;">
+
+<p align="">
+<a href='https://app.koyeb.com/services/deploy?type=git&repository=muzantech/SIGMA-MDX&ports=3000&env[PREFIX]=.&env[SESSION_ID]=&env[ALWAYS_ONLINE]=false&env[MODE]=public&env[AUTO_STATUS_MSG]=Seen%20status%20by%20PRINCE-MDX&env[AUTO_STATUS_REPLY]=false&env[AUTO_STATUS_SEEN]=true&env[AUTO_TYPING]=false&env[ANTI_LINK]=true&env[AUTO_REACT]=false&env[READ_MESSAGE]=false' target="_blank"><img alt='Heroku' src='https://img.shields.io/badge/-koyeb ‎ deploy-FF009D?style=for-the-badge&logo=koyeb&logoColor=white'/< width=150 height=28/p></a>
+<a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
+
+### <h4 align="">2. TALKDROVE FREE</h4>
+<p style="text-align: center; font-size: 1.2em;">
   
--  [Watch on YouTube](https://www.youtube.com/@princetech11)
+<p align="">
+<a href='https://host.talkdrove.com/dashboard/select-bot/prepare-deployment?botId=36' target="_blank"><img alt='Heroku' src='https://img.shields.io/badge/-TalkDrove ‎Deploy-6971FF?style=for-the-badge&logo=Github&logoColor=white'/< width=150 height=28/p></a>
+  <a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
 
-- **Deploy on Talk Drove**  
+### <h4 align="">4. RAILWAY</h4>
+<p style="text-align: center; font-size: 1.2em;">
+
+<p align="">
+<a href='https://railway.app/new' target="_blank"><img alt='Heroku' src='https://img.shields.io/badge/-railway deploy-FF8700?style=for-the-badge&logo=railway&logoColor=white'/< width=150 height=28/p></a>
+<a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
+
+### <h4 align="">5. RENDER</h4>
+<p style="text-align: center; font-size: 1.2em;">
   
-  **📺 Talk Drove Deployment Tutorial:**
--  [creat account](https://host.talkdrove.com/auth/signup?ref=74F6235511)
-
-
--  [deploy](https://host.talkdrove.com/share-bot/36)
+<p align="">
+<a href='https://dashboard.render.com/web/new' target="_blank"><img alt='Heroku' src='https://img.shields.io/badge/-Render deploy-black?style=for-the-badge&logo=render&logoColot=white'/< width=150 height=28/p></a>
+<a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
 
   
--  [Watch on YouTube](https://www.youtube.com/@princetech11)
+<b><strong><summary align="" style="color: Yello;">EASIEST METHOD 2</summary></strong></b>
+<p style="text-align: center; font-size: 1.2em;">
 
-- **Deploy on Panel**
-  
-  **📺 Panel Deployment Tutorial:**  
-  [Watch on YouTube](https://www.youtube.com/@princetech11)
+</details>
 
-## 📢 Join Our WhatsApp Channel
+<a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
 
-Stay updated by joining our official WhatsApp channel:
 
-[Join WhatsApp Channel](https://whatsapp.com/channel/0029Vakd0RY35fLr1MUiwO3O)
+### <h4 align="">7. REPLIT</h4>
+<p style="text-align: center; font-size: 1.2em;">
 
-## 🙏 Thank You!
+<p align="">
+<a href='https://replit.com/~' target="_blank"><img alt='Replit' src='https://img.shields.io/badge/-Replit Deploy-1976D2?style=for-the-badge&logo=replit&logoColor=white'/< width=150 height=28/p></a> </a>
+<a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
 
-**Developed by [PRINCE MAYEL](https://github.com/mayelprince)**
+
+## 🪀 WHATSAPP CHANNEL 
+STAY CONNECTED WITH THE LATEST UPDATES AND COMMUNITY BY JOINING OUR OFFICIAL WHATSAPP GROUP AND CHANNEL. YOU CAN ALSO CONTACT THE OWNER DIRECTLY.
+
+[![WhatsApp Channel](https://img.shields.io/badge/JOIN-WHATSAAP%20CHANNEL-25D366?style=for-the-badge&logo=whatsapp)](https://whatsapp.com/channel/0029Vakd0RY35fLr1MUiwO3O)
+
+## 🪀 WHATSAPP GROUP
+JOINING OUR OFFICIAL WHATSAPP GROUP AND CHANNEL. YOU CAN ALSO CONTACT THE OWNER DIRECTLY.
+
+[![WhatsApp Group](https://img.shields.io/badge/JOIN-WHATSAAP%20GROUP-25D366?style=for-the-badge&logo=whatsapp)](https://whatsapp.com/channel/0029Vakd0RY35fLr1MUiwO3O)
+
+ 
+
+
+***
+
+
+ <br>
+<h2 align="center"> ⚠️ DISCLAIMER ⚠️
+ </h2>
+ 
+ ---
+
+<h3 align="center"> DON'T COPY WITHOUT PERMISSION 
+</h3>
+
+<br>
+
+```
+I'M PRINCE M.
+```
+-----
+<a><img src='https://i.imgur.com/LyHic3i.gif'/></a>
+
+------
