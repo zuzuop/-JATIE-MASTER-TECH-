@@ -1,6 +1,6 @@
-name: prince-mdxi
+name: PRINCE-MDXI
 services:
-  - name: prince-mdxi-service
+  - name: PRINCE-MDXI-service
     type: web
     ports:
       - 5000
