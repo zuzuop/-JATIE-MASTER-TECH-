@@ -35,9 +35,9 @@ ALIVE_IMG: process.env.ALIVE_IMG || "https://files.catbox.moe/kzfne8.jpeg",
 // add img for alive msg
 MENU_IMG: process.env.MENU_IMG || "https://raw.githubusercontent.com/Mayelprince/url/main/url/1264.jpg",
 // menu image 
-MENU3_IMG: process.env.MENU_IMG || "",
+MENU3_IMG: process.env.MENU_IMG || "https://files.catbox.moe/upmwpw.jpg",
 // menu image 
-RUNTIME_IMG: process.env.RUNTIME_IMG || "",
+RUNTIME_IMG: process.env.RUNTIME_IMG || "https://files.catbox.moe/ykdtkm.jpeg",
 // runtime image 
 WELCOME_ENABLED: process.env.WELCOME_ENABLED || "true",
     // welcome group members 
