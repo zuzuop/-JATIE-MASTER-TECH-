@@ -20,7 +20,7 @@ DONT FORGET TO FORK 🍴 & STAR 🌟 REPO😇
 ```
 ---
 <a href="https://git.io/typing-svg">
-  <img src="https://readme-typing-svg.demolab.com?font=Black+Ops+One&size=50&pause=1000&color=1BAFBAFF&center=true&width=810&height=100&lines=THANKS%20FOR%20CHOOSING%20PRINCE-MDXI;MULTI%20DEVICE%20WHATSAPP%20BOT;CREATED%20BY%20PRINCE%20TECH" alt="Typing SVG" />
+  <img src="https://readme-typing-svg.demolab.com?font=Black+Ops+One&size=50&pause=1000&color=1BAFBAFF&center=true&width=1200&height=100&lines=THANKS%20FOR%20CHOOSING%20PRINCE-MDXI;MULTI%20DEVICE%20WHATSAPP%20BOT;CREATED%20BY%20PRINCE%20TECH" alt="Typing SVG" />
 </a>
 </p>
   
