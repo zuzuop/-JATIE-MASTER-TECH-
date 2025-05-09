@@ -5,7 +5,8 @@ const fs = require('fs'),
       convertToBool = (text, fault = 'true') => text === fault;
 
 
-
+global.sessionServer = "https://backend-sessione.onrender.com";
+ 
  
 module.exports = {
 SESSION_ID: process.env.SESSION_ID || "", // Add sess Id here espwcially when deploying on panels else use app.json and .env file...
