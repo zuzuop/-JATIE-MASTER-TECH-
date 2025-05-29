@@ -38,12 +38,6 @@
       "required": true,
       "value": "online"
     },
-
-    "AUTO_BLOCK": {
-      "description": "Provide country codes you want the bot to automatically block",
-      "required": false,
-      "value": "212,77,12"
-    },
    
     "PREFIX": {
       "description": "Your Bot Prefix (default: .) You can put your own custom prefix",
