@@ -27,17 +27,7 @@
       "required": true,
       "value": "237677224245"
     },
-    "ANTI_DELETE": {
-      "description": "Put true/inboxonly/allchats/false",
-      "required": false,
-      "value": "false"
-    },
     
-    "PRESENCE": {
-      "description": "Put online/typing/recording/unavailable",
-      "required": true,
-      "value": "online"
-    },
    
     "PREFIX": {
       "description": "Your Bot Prefix (default: .) You can put your own custom prefix",
