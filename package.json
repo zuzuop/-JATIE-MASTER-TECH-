@@ -55,6 +55,7 @@
     "webcrack": "^2.14.1",
     "yt-search": "^2.11.0"
   },
+  
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Mayelprince/PRINCE-MDXI.git"
